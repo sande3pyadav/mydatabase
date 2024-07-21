@@ -1,0 +1,9 @@
+feroxbuster -u http://example.com
+feroxbuster -u http://example.com -w /path/to/wordlist.txt
+feroxbuster -u http://example.com -r
+feroxbuster -u http://example.com -d 3
+feroxbuster -u http://example.com --filter-status 403
+feroxbuster -u http://example.com -t 20
+feroxbuster -u http://example.com --timeout 10
+feroxbuster -u http://example.com --user-agent "Mozilla/5.0"
+feroxbuster -u http://example.com --proxy http://127.0.0.1:8080
