@@ -1,0 +1,20 @@
+<?php
+
+$url = $_GET['url'];
+$blacklist = ['127.0.0.1', 'localhost'];
+
+if (filter_var($url, FILTER_VALIDATE_URL)) {
+    $host = parse_url($url, PHP_URL_HOST);
+
+    if (in_array($host, $blacklist)) {
+        echo 'Error: URL not allowed.';
+        exit;
+    }
+
+    $content = file_get_contents($url);  // Use the full URL here
+    echo $content;
+} else {
+    echo 'Error: Invalid URL.';
+}
+
+?>
