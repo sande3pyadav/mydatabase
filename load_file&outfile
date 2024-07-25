@@ -1,0 +1,84 @@
+how to load_file and into outfile 
+setup in ubuntu 
+
+The secure-file-priv option in MySQL restricts file operations (such as LOAD DATA, SELECT ... INTO OUTFILE, and LOAD_FILE()) to a specific directory. Enabling and configuring this option enhances security by limiting where files can be read from or written to by the MySQL server.
+
+Here’s how you can enable and configure secure-file-priv on Ubuntu:
+Step-by-Step Guide
+
+    Locate the MySQL Configuration File
+
+    The MySQL configuration file is usually located at /etc/mysql/my.cnf or /etc/mysql/mysql.conf.d/mysqld.cnf. You can use the following command to locate it:
+
+    bash
+
+sudo find /etc/mysql/ -name "*.cnf"
+
+Edit the MySQL Configuration File
+
+Open the MySQL configuration file using a text editor such as nano or vim. For example:
+
+bash
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+Add or Modify the secure-file-priv Setting
+
+Add the secure-file-priv directive under the [mysqld] section. Specify the directory you want MySQL to use for file operations. For example:
+
+ini
+
+[mysqld]
+secure-file-priv = /var/lib/mysql-files
+
+Ensure the directory exists and has the appropriate permissions:
+
+bash
+
+sudo mkdir /var/lib/mysql-files
+sudo chown mysql:mysql /var/lib/mysql-files
+sudo chmod 750 /var/lib/mysql-files
+
+Restart MySQL Service
+
+After making changes to the configuration file, restart the MySQL service to apply the changes:
+
+bash
+
+sudo systemctl restart mysql
+
+Verify the Configuration
+
+You can verify that the secure-file-priv option is set correctly by running the following SQL query:
+
+sql
+
+SHOW VARIABLES LIKE 'secure_file_priv';
+
+The result should show the directory you specified:
+
+text
+
+    +------------------+----------------------+
+    | Variable_name    | Value                |
+    +------------------+----------------------+
+    | secure_file_priv | /var/lib/mysql-files |
+    +------------------+----------------------+
+
+Using secure-file-priv
+
+After configuring secure-file-priv, you need to ensure that all file operations are performed within the specified directory. Here are examples of how to use secure-file-priv in SQL queries:
+
+    Reading a File with LOAD_FILE()
+
+    sql
+
+SELECT LOAD_FILE('/var/lib/mysql-files/yourfile.txt');
+
+Writing a File with INTO OUTFILE
+
+sql
+
+    SELECT * FROM your_table INTO OUTFILE '/var/lib/mysql-files/output.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+By setting up and using secure-file-priv, you limit MySQL’s file operations to a designated directory, enhancing the security of your database server.
