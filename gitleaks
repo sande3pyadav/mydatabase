@@ -1,0 +1,2 @@
+gitleaks detect -r=https://github.com/megacorpone/megacorpone.com --report-path gitleaks-report.json
+gitleaks detect --source . --report-path gitleaks-report.json
