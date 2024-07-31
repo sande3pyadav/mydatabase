@@ -5,7 +5,7 @@
  //echo "<pre>{$cmd}</pre>";
 //patch 
 
-   $target=escapeshellarg($_GET['search']);
+/*   $target=escapeshellarg($_GET['search']);
 
    if(filter_var($target, FILTER_VALIDATE_IP))
      {
@@ -17,5 +17,26 @@
      echo "invalid ipaddress";
 
  }
+*/
 
-?>
+ //some challenge to bypass filtetr blacklist 
+
+
+
+    $target = $_GET[ 'ip' ];
+
+    // Set blacklist
+    $substitutions = array('&&' => '',';'  => '',);
+
+    // Remove any of the characters in the array (blacklist).
+    $target = str_replace( array_keys( $substitutions ), $substitutions, $target );
+    echo $target;
+    // Determine OS and execute the ping command.
+    $cmd = shell_exec( 'ping  -c 4 ' . $target );
+
+    // Feedback for the end user
+    echo "<pre>{$cmd}</pre>";
+
+
+?> 
+
