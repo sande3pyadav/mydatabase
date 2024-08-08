@@ -1,3 +1,4 @@
+
 # Linux - Privilege Escalation
 
 ## Summary
@@ -42,7 +43,6 @@
     * [Docker](#docker)
     * [LXC/LXD](#lxclxd)
 * [Kernel Exploits](#kernel-exploits)
-    * [CVE-2016-5195 (DirtyCow)](#CVE-2016-5195-dirtycow)
     * [CVE-2010-3904 (RDS)](#[CVE-2010-3904-rds)
     * [CVE-2010-4258 (Full Nelson)](#CVE-2010-4258-full-nelson)
     * [CVE-2012-0056 (Mempodipper)](#CVE-2012-0056-mempodipper)
@@ -59,6 +59,7 @@
     ./lse.sh -l2 # dump all the information it gathers about the system
     ```
 
+    * [CVE-2016-5195 (DirtyCow)](#CVE-2016-5195-dirtycow)
 - [LinEnum - Scripted Local Linux Enumeration & Privilege Escalation Checks](https://github.com/rebootuser/LinEnum)
     
     ```powershell
@@ -795,3 +796,13 @@ https://www.exploit-db.com/exploits/18411
 * [SSH Key Predictable PRNG (Authorized_Keys) Process - @weaknetlabs](https://github.com/weaknetlabs/Penetration-Testing-Grimoire/blob/master/Vulnerabilities/SSH/key-exploit.md)
 
 * [Linux Privilege Escalation Udemy Course](https://mega.nz/file/reAQxSxA#ZTrVDC0LlHMtYQf2_2Jb1x0IKfVXeQO2jmEr7er0Vag)
+
+
+
+
+
+how to find writable file 
+
+find /etc -writable -ls 2>/dev/null
+
+https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-fail2ban-privilege-escalation/
