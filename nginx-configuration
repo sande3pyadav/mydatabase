@@ -1,0 +1,58 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	server_name trick.htb;
+	root /var/www/html;
+
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name _;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+	}
+}
+
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name preprod-marketing.trick.htb;
+
+	root /var/www/market;
+	index index.php;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.3-fpm-michael.sock;
+        }
+}
+
+server {
+        listen 80;
+        listen [::]:80;
+
+        server_name preprod-payroll.trick.htb;
+
+        root /var/www/payroll;
+        index index.php;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+        }
+}
