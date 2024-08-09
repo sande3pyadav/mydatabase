@@ -67,3 +67,20 @@ dnsrecon -r 10.10.11.1/24 -n 10.10.11.166
 [+] 1 Records Found
 
 
+//zone transfer attack
+
+dig @10.10.11.166 trick.htb axfr # zone transfer attack 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
