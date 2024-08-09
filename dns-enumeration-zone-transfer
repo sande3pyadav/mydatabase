@@ -5,10 +5,65 @@ nslookup
    <ip> # after type you can see results 
 
 dig tool 
-   dig <ip> -x @<ip>
+   dig @<ip> -x <ip>
 
 
 dnsrecon 
    dnsrecon -r 10.10.10.1/24 -d '' -n @<ip>
 
-  
+
+> server 10.10.11.166
+Default server: 10.10.11.166
+Address: 10.10.11.166#53
+> 127.0.0.1
+1.0.0.127.in-addr.arpa  name = localhost.
+> trick.htb
+Server:         10.10.11.166
+Address:        10.10.11.166#53
+
+Name:   trick.htb
+Address: 127.0.0.1
+Name:   trick.htb
+Address: ::1
+> 10.10.11.166
+166.11.10.10.in-addr.arpa       name = trick.htb.
+> 
+zsh: suspended  nslookup
+
+// dig 
+
+
+dig @10.10.11.166 -x 10.10.11.166                                                                                                
+                                                                                                                                     
+; <<>> DiG 9.19.21-1+b1-Debian <<>> @10.10.11.166 -x 10.10.11.166                                                                    
+; (1 server found)                                                                                                                   
+;; global options: +cmd                                                                                                              
+;; Got answer:                                                                                                                       
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 21364
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 3
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 75b7e8acd794699040f02b8966b659bf28dbe65d75161733 (good)
+;; QUESTION SECTION:
+;166.11.10.10.in-addr.arpa.     IN      PTR
+
+;; ANSWER SECTION:
+166.11.10.10.in-addr.arpa. 604800 IN    PTR     trick.htb.
+
+;; AUTHORITY SECTION:
+11.10.10.in-addr.arpa.  604800  IN      NS      trick.htb.
+
+;; ADDITIONAL SECTION:
+trick.htb.              604800  IN      A       127.0.0.1
+trick.htb.              604800  IN      AAAA    ::1
+
+//dnsrecon 
+
+dnsrecon -r 10.10.11.1/24 -n 10.10.11.166
+[*] Performing Reverse Lookup from 10.10.11.0 to 10.10.11.255
+[+]      PTR trick.htb 10.10.11.166
+[+] 1 Records Found
+
+
