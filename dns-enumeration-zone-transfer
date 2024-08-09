@@ -1,0 +1,14 @@
+//using tool nslookup for reverse lookup #  to domain 
+
+nslookup 
+   server <ip> 
+   <ip> # after type you can see results 
+
+dig tool 
+   dig <ip> -x @<ip>
+
+
+dnsrecon 
+   dnsrecon -r 10.10.10.1/24 -d '' -n @<ip>
+
+  
