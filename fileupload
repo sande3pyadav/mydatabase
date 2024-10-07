@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+    <h2>Upload an Image</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+        <label for="uploaded">Choose a file:</label>
+        <input type="file" name="uploaded" id="uploaded" required>
+        <br><br>
+        <input type="submit" name="Upload" value="Upload">
+    </form>
+</body>
+</html>
+
+
+
+<?php
+
+if( isset( $_POST[ 'Upload' ] ) ) {
+    // Where are we going to be writing to?
+    $target_path  = "/tmp/fileupload/uploads/";
+    $target_path .= $_FILES[ 'uploaded' ][ 'name' ];
+
+
+    // Can we move the file to the upload folder?
+    if( !move_uploaded_file( $_FILES[ 'uploaded' ][ 'tmp_name' ], $target_path ) ) {
+        // No
+        echo '<pre>Your image was not uploaded.</pre>';
+    }
+    else {
+        // Yes!
+        echo "<pre>{$target_path} succesfully uploaded!</pre>";
+    }
+}
+
+?> 
+
