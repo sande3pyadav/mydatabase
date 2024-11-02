@@ -1,0 +1,60 @@
+#check suid binary 
+find / -perm -u+s -type f 2>/dev/null
+
+#check sudo rights 
+sudo -l 
+
+#check readable and writable and executable file for root user and normal user 
+
+find / -user root -writable 2>/dev/null | grep -v '/tmp\|/sys\|/lib\|/proc\|/dev\|/run\|/snap'
+find / -user root -executable 2>/dev/null | grep -v '/tmp\|/sys\|/lib\|/proc\|/dev\|/run\|/snap'
+find / -user root -readable 2>/dev/null | grep -v '/tmp\|/sys\|/lib\|/proc\|/dev\|/run\|/snap'
+
+#check kernel info 
+uname -a -r 
+you can use linux exploit suggester exploit for test kernel exploit 
+
+#check root running process 
+ps -ef --forest 
+
+#check network state 
+netstat -antlp 
+
+# check cronjob is running or not 
+cat /etc/crontab 
+
+#check /opt file for third party software 
+cd /opt
+
+# check any missing path availbe or not 
+echo $PATH  
+
+# check user in groups or not  
+groups 
+
+#check any misconfiguration file , or password , username , database cred 
+/var/
+/home/
+/opt
+
+#check if any database availble or not 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
