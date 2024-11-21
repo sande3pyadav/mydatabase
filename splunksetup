@@ -1,0 +1,4 @@
+ 1227  sudo /opt/splunkforwarder/bin/splunk  add forwarder-server 192.168.1.14:9997
+ 1228  sudo /opt/splunkforwarder/bin/splunk  add forward-server 192.168.1.14:9997
+ 1229  sudo /opt/splunkforwarder/bin/splunk  add monitor /var/log
+ 1230  sudo /opt/splunkforwarder/bin/splunk  restart
