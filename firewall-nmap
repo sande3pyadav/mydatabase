@@ -1,0 +1,18 @@
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j ACCEPT
+iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+iptables -A INPUT -p tcp --tcp-flags ALL SYN,ACK,FIN,RST -j DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+
+# Allow Null Flag Packets (ports appear open)
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j ACCEPT
+
+# Drop Packets with Any TCP Flag (ports appear filtered)
+iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+
+# Default policies (optional for tighter control)
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
